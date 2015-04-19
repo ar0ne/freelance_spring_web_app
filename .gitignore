@@ -3,3 +3,7 @@
 *.jar
 *.war
 *.ear
+/freelance/app-web/target/
+/freelance/app-dao/target/
+/freelance/app-core/target/
+/freelance/app-service/target/

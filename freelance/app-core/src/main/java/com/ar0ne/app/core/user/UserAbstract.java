@@ -1,4 +1,4 @@
-package com.ar0ne.app.core;
+package com.ar0ne.app.core.user;
 
 /**
  *

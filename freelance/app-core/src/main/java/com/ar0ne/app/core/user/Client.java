@@ -1,5 +1,6 @@
-package com.ar0ne.app.core;
+package com.ar0ne.app.core.user;
 
+import com.ar0ne.app.core.request.RequestAbstract;
 import java.util.List;
 
 /**
