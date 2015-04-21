@@ -6,7 +6,7 @@ package com.ar0ne.app.core.user;
  */
 public abstract class UserAbstract {
     
-    private Long    id;
+    private long    id;
     private String  name;
     private String  login;
     private String  password;
@@ -14,15 +14,15 @@ public abstract class UserAbstract {
     public UserAbstract() {
     }
     
-    public UserAbstract(Long id, String name, String login, String password) {
+    public UserAbstract(long id, String name, String login, String password) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.password = password;
     }
 
-    public abstract Long getId();
-    public abstract void setId(Long id);
+    public abstract long getId();
+    public abstract void setId(long id);
     public abstract String getPassword();
     public abstract void setPassword(String password);
     public abstract void setName(String name);

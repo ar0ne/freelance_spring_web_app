@@ -6,13 +6,29 @@ package com.ar0ne.app.core.user;
  */
 public class Admin extends UserAbstract {
     
-    private Long id;
+    private long id;
     private String name;
     private String login;
     private String password;
     
+    public Admin() {
+    }
+    
+    public Admin(String name, String login, String password) {
+        this.name = name;
+        this.login = login;
+        this.password = password;
+    }
+
+    public Admin(long id, String name, String login, String password) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.password = password;
+    }
+    
     @Override
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -32,7 +48,7 @@ public class Admin extends UserAbstract {
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -54,9 +70,10 @@ public class Admin extends UserAbstract {
     @Override
     public String toString() {
         return "Admin["
-                + "login: " + this.login
-                + ",name: " + this.name
-                + ",password: " + this.password
+                +" id: " + this.id
+                + " ,login: " + this.login
+                + " ,name: " + this.name
+                + " ,password: " + this.password
                 + " ]";
     }
 

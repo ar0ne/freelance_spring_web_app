@@ -11,7 +11,7 @@ public class Client extends UserAbstract{
     
     private List<RequestAbstract> requests;
     
-    private Long id;
+    private long id;
     private String name;
     private String login;
     private String password;
@@ -19,9 +19,14 @@ public class Client extends UserAbstract{
     
     public Client(){
     }
+    
+    public Client( String name, String login, String password) {
+        this.name = name;
+        this.login = login;
+        this.password = password;
+    }
 
     public Client(long id, String name, String login, String password) {
-        //super(id, name, login, password);
         this.id = id;
         this.name = name;
         this.login = login;
@@ -29,7 +34,7 @@ public class Client extends UserAbstract{
     }
 
     @Override
-    public Long getId() {
+    public long getId() {
         return id; 
     }
 
@@ -49,7 +54,7 @@ public class Client extends UserAbstract{
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -85,9 +90,10 @@ public class Client extends UserAbstract{
     @Override
     public String toString() {
         return "Client["
-                + "login: " + this.login
-                + ",name: " + this.name
-                + ",password: " + this.password
+                + " id: " + this.id 
+                + " ,login: " + this.login
+                + " ,name: " + this.name
+                + " ,password: " + this.password
                 + " ]";
     }
     

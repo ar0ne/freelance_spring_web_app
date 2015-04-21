@@ -13,11 +13,63 @@ class AppMain {
                 = new ClassPathXmlApplicationContext("Spring-Module.xml");
 
         UserDao userDAO = (UserDao) context.getBean("userDAO");
-        UserAbstract user = new Client(1, "Serj", "ar1", "123");
-        userDAO.addUser(user);
-
-        UserAbstract user1 = userDAO.findUserById(1);
+        
+        System.out.println("Test: add new users");
+        
+        UserAbstract [] users = new Client[] {
+            new Client("Serj", "ar1", "123"),
+            new Client("Jessi", "pinkman", "meth"),
+            new Client("Walter W.", "big_boss", "money"),
+            new Client("Jennifer", "jenny", "pass")
+        };
+        
+        for(UserAbstract user : users) {
+            userDAO.addUser(user);
+            System.out.println(user);
+        }
+        
+        
+        System.out.println("\nTest: find user by id");
+        
+        UserAbstract user1 = userDAO.findUserById(users[3].getId());
         System.out.println(user1);
+        
+        System.out.println("\nTest: find user with login = pinkman");
+        
+        UserAbstract user2 = userDAO.findUserByLogin("pinkman");
+        System.out.println(user2);
+        
+        System.out.println("\nTest: update user - pinkman");
+        user2.setName("Jessi Jackson");
+        user2.setPassword("more_meth");
+        userDAO.updateUser(user2);
+        
+        UserAbstract user3 = userDAO.findUserByLogin("pinkman");
+        System.out.println(user3);
+        
+        System.out.println("\nTest: delete users");
+        
+        for (UserAbstract user : users) {
+            long id = user.getId();
+            System.out.println(user);
+            userDAO.deleteUser(id);
+        }
+        
+        
+        System.out.println("\nTest: find user by id");
+        
+        UserAbstract user4 = userDAO.findUserById(users[3].getId());
+        System.out.println(user4);
+        
+        
+        
+        
+        
+        
+        
+        
+
+
 
     }
 }

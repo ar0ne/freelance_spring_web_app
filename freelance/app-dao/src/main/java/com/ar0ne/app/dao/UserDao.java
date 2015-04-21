@@ -7,8 +7,9 @@ import com.ar0ne.app.core.user.*;
  */
 public interface UserDao {
     public void addUser(UserAbstract user);
-    public void deleteUser();
-    public void updateUser();
+    public void deleteUser(long id);
+    public void updateUser(UserAbstract user);
     public void getAllUsers();
-    public UserAbstract findUserById(int id);
+    public UserAbstract findUserById(long id);
+    public UserAbstract findUserByLogin(String login);
 }
