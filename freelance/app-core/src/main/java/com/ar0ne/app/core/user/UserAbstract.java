@@ -5,40 +5,30 @@ package com.ar0ne.app.core.user;
  * @author ar1
  */
 public abstract class UserAbstract {
-    private String name;
-    private String login;
-    private String password;
-
-    public UserAbstract(String name, String login, String password) {
-        this.name = name;
-        this.login = login;
-        this.password = password;
-    }
+    
+    private Long    id;
+    private String  name;
+    private String  login;
+    private String  password;
 
     public UserAbstract() {
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+    
+    public UserAbstract(Long id, String name, String login, String password) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
         this.password = password;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getLogin() {
-        return login;
-    }
+    public abstract Long getId();
+    public abstract void setId(Long id);
+    public abstract String getPassword();
+    public abstract void setPassword(String password);
+    public abstract void setName(String name);
+    public abstract void setLogin(String login);
+    public abstract String getName();
+    public abstract String getLogin();
+    
+    public abstract String toString(); 
 }
