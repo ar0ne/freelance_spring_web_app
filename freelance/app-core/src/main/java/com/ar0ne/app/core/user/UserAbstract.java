@@ -11,16 +11,6 @@ public abstract class UserAbstract {
     private String  login;
     private String  password;
 
-    public UserAbstract() {
-    }
-    
-    public UserAbstract(long id, String name, String login, String password) {
-        this.id = id;
-        this.name = name;
-        this.login = login;
-        this.password = password;
-    }
-
     public abstract long getId();
     public abstract void setId(long id);
     public abstract String getPassword();

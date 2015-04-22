@@ -1,8 +1,10 @@
 package com.ar0ne.app.common;
 
+import com.ar0ne.app.core.user.Admin;
 import com.ar0ne.app.core.user.Client;
 import com.ar0ne.app.core.user.UserAbstract;
 import com.ar0ne.app.dao.UserDao;
+import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -16,8 +18,8 @@ class AppMain {
         
         System.out.println("Test: add new users");
         
-        UserAbstract [] users = new Client[] {
-            new Client("Serj", "ar1", "123"),
+        UserAbstract [] users = new UserAbstract[] {
+            new Admin("Serj", "ar1", "123"),
             new Client("Jessi", "pinkman", "meth"),
             new Client("Walter W.", "big_boss", "money"),
             new Client("Jennifer", "jenny", "pass")
@@ -47,6 +49,14 @@ class AppMain {
         UserAbstract user3 = userDAO.findUserByLogin("pinkman");
         System.out.println(user3);
         
+        
+        System.out.println("\nTest: get All users");
+        List<UserAbstract> list = userDAO.getAllUsers();
+        for (UserAbstract user : list) {
+            System.out.println(user);
+        }
+        
+        
         System.out.println("\nTest: delete users");
         
         for (UserAbstract user : users) {
@@ -60,8 +70,6 @@ class AppMain {
         
         UserAbstract user4 = userDAO.findUserById(users[3].getId());
         System.out.println(user4);
-        
-        
         
         
         

@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.sql.DataSource;
 
 
@@ -20,7 +22,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void addUser(UserAbstract user) {
         String sql = "INSERT INTO users "
-                + "(LOGIN, PASSWORD, NAME) VALUES (?, ?, ?)";
+                + "(LOGIN, PASSWORD, NAME, is_admin) VALUES (?, ?, ?, ?)";
         Connection conn = null;
 
         try {
@@ -32,6 +34,7 @@ public class UserDaoImpl implements UserDao {
             ps.setString(1, user.getLogin());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getName());
+            ps.setBoolean(4, user instanceof Admin);
             
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -68,12 +71,21 @@ public class UserDaoImpl implements UserDao {
             UserAbstract user = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                user = new Client(
-                        rs.getLong("USER_ID"),
-                        rs.getString("NAME"),
-                        rs.getString("LOGIN"),
-                        rs.getString("PASSWORD")
-                );
+                if(rs.getBoolean("is_admin") == true) {
+                    user = new Admin(
+                            rs.getLong("USER_ID"),
+                            rs.getString("NAME"),
+                            rs.getString("LOGIN"),
+                            rs.getString("PASSWORD")
+                    );
+                }else {
+                    user = new Client(
+                            rs.getLong("USER_ID"),
+                            rs.getString("NAME"),
+                            rs.getString("LOGIN"),
+                            rs.getString("PASSWORD")
+                    );
+                }
             }
             rs.close();
             ps.close();
@@ -104,12 +116,21 @@ public class UserDaoImpl implements UserDao {
             UserAbstract user = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                user = new Client(
-                        rs.getLong  ("USER_ID"),
-                        rs.getString("NAME"),
-                        rs.getString("LOGIN"),
-                        rs.getString("PASSWORD")
-                );
+                if (rs.getBoolean("is_admin") == true) {
+                    user = new Admin(
+                            rs.getLong("USER_ID"),
+                            rs.getString("NAME"),
+                            rs.getString("LOGIN"),
+                            rs.getString("PASSWORD")
+                    );
+                } else {
+                    user = new Client(
+                            rs.getLong("USER_ID"),
+                            rs.getString("NAME"),
+                            rs.getString("LOGIN"),
+                            rs.getString("PASSWORD")
+                    );
+                }
             }
             rs.close();
             ps.close();
@@ -155,7 +176,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(UserAbstract user) {
-        String sql = "UPDATE users SET LOGIN = ?, NAME = ?, PASSWORD = ? WHERE USER_ID = ?";
+        String sql = "UPDATE users SET LOGIN = ?, NAME = ?, PASSWORD = ?, is_admin = ? WHERE USER_ID = ?";
 
         Connection conn = null;
 
@@ -166,7 +187,8 @@ public class UserDaoImpl implements UserDao {
             ps.setString(1, user.getLogin());
             ps.setString(2, user.getName());
             ps.setString(3, user.getPassword());
-            ps.setLong  (4, user.getId());
+            ps.setBoolean(4, user instanceof Admin);
+            ps.setLong  (5, user.getId());
             ps.executeUpdate();
             
             ps.close();
@@ -185,7 +207,58 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void getAllUsers() {
+    public List<UserAbstract> getAllUsers() {
+        List<UserAbstract> users = new ArrayList<UserAbstract>();
+        
+        String sql = "SELECT * FROM users";
+
+        Connection conn = null;
+
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            UserAbstract user = null;
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                if (rs.getBoolean("is_admin") == true) {
+                    user = new Admin(
+                            rs.getLong("USER_ID"),
+                            rs.getString("NAME"),
+                            rs.getString("LOGIN"),
+                            rs.getString("PASSWORD")
+                    );
+                } else {
+                    user = new Client(
+                            rs.getLong("USER_ID"),
+                            rs.getString("NAME"),
+                            rs.getString("LOGIN"),
+                            rs.getString("PASSWORD")
+                    );
+                }
+                
+                users.add(user);
+            }
+            rs.close();
+            ps.close();
+            
+            return users;
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                }
+            }
+        }
+        
+        
+        
         
     }
 
