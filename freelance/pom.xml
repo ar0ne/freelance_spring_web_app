@@ -7,9 +7,10 @@
     <packaging>pom</packaging>
     <modules>
         <module>app-core</module>
-        <module>app-web</module>
         <module>app-dao</module>
         <module>app-service</module>
+    <module>app-web</module>
+        <module>app-rest</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
