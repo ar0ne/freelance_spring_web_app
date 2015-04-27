@@ -19,9 +19,9 @@ public class UserServiceImpl implements UserService{
     
     @Override
     public void addUser(UserAbstract user) {
-        Assert.isNull(user.getLogin(), "user login can't be empty");
-        Assert.isNull(user.getName(), "User name can't be empty");
-        Assert.isNull(user.getPassword(), "User password can't be empty");
+        Assert.notNull(user.getLogin(), "user login can't be empty");
+        Assert.notNull(user.getName(), "User name can't be empty");
+        Assert.notNull(user.getPassword(), "User password can't be empty");
         
         UserAbstract existing_user = userDao.findUserByLogin(user.getLogin());
         if(existing_user != null) {
@@ -43,10 +43,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUser(UserAbstract user){
-        Assert.isNull(user.getId(), "user Id can't be NULL");
-        Assert.isNull(user.getLogin(), "user Login can't be empty");
-        Assert.isNull(user.getName(), "user Name can't be empty");
-        Assert.isNull(user.getPassword(), "user Password can't be empty");
+        Assert.notNull(user.getId(), "user Id can't be NULL");
+        Assert.notNull(user.getLogin(), "user Login can't be empty");
+        Assert.notNull(user.getName(), "user Name can't be empty");
+        Assert.notNull(user.getPassword(), "user Password can't be empty");
         
         UserAbstract ex_user = userDao.findUserByLogin(user.getLogin());
         if (ex_user != null && ex_user.getId() != user.getId()) {
