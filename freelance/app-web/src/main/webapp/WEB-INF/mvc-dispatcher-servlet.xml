@@ -40,5 +40,7 @@
         <property name="password" value="whatispassword" />
     </bean>
     
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+    
  
 </beans>

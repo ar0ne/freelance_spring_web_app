@@ -21,15 +21,15 @@ public class HomeController {
         
     @RequestMapping("/")
     public String init() {
-        return "redirect:/home";
+        return "redirect:/index";
     }
     
     
-    @RequestMapping("/home")
+    @RequestMapping("/index")
     public ModelAndView homePage() {
         
         List<UserAbstract> users = userService.getAllUsers();
-        ModelAndView view = new ModelAndView("home", "users", users);
+        ModelAndView view = new ModelAndView("index", "users", users);
         
         return view;
     }
@@ -62,7 +62,7 @@ public class HomeController {
         return "redirect:/sign_in";
     }
     
-    @RequestMapping("/userProfile/{id}")
+    @RequestMapping(value="/userProfile/{id}", method = RequestMethod.GET)
     public ModelAndView userProfilePage(@PathVariable("id") Long userId) {
         UserAbstract user = userService.findUserById(userId);
         
@@ -95,5 +95,17 @@ public class HomeController {
         return "redirect:/sign_up";
     }
     
+    
+    @RequestMapping(value="/userProfile/submitUpdateUserProfile", method = RequestMethod.POST)
+    public String updateUserProfileAction(  @RequestParam("name")      String   userName,
+                                            @RequestParam("login")     String   userLogin,
+                                            @RequestParam("password")  String   userPassword,
+                                            @RequestParam("id")        Integer  userId) {
+        
+        // @TODO: what if this is Admin?
+        userService.updateUser(new Client(userId, userName, userLogin, userPassword));
+        
+        return "redirect:/userProfile/" + userId;
+    }
 
 }
