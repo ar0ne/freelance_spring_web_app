@@ -27,7 +27,7 @@ public class Vacancy {
     }
 
 
-    public LocalDateTime getDataAdded() {
+    public LocalDateTime getDateAdded() {
         return dateAdded;
     }
 
@@ -50,8 +50,12 @@ public class Vacancy {
     public long getUserId() {
         return userId;
     }
+    
+    public boolean getStatus() {
+        return status;
+    }
 
-    public void setDataAdded(LocalDateTime dateAdded) {
+    public void setDateAdded(LocalDateTime dateAdded) {
         this.dateAdded = dateAdded;
     }
 

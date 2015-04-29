@@ -6,6 +6,11 @@ import java.util.List;
 
 public interface VacancyService {
 
+    public void addVacancy(Vacancy v);
+    public void deleteVacancy(Long vacancyId);
+    public void updateUser(Vacancy vacancy);
     public List<Vacancy> getAllVacancys();
+    public Vacancy findVacancyById(long vacancyId);
+    
     
 }

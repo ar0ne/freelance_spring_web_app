@@ -15,6 +15,7 @@
    
 
     <mvc:annotation-driven/>
+    
     <context:component-scan base-package="com.ar0ne.app.*"/>
  
     <bean id="viewResolver"
@@ -26,6 +27,22 @@
     <bean id="userService" class="com.ar0ne.app.service.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
     </bean>
+    
+    <bean id="vacancyService" class="com.ar0ne.app.service.VacancyServiceImpl">
+        <property name="vacancyDao" ref="vacancyDao"/>
+    </bean>
+    
+<!--    <bean id="jobRequestService" class="com.ar0ne.app.service.JobRequestServiceImpl">
+        <property name="jobRequestDao" ref="jobRequestDao"/>
+    </bean>-->
+    
+    <bean id="vacancyDao" class="com.ar0ne.app.dao.VacancyDaoImpl">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+<!--    <bean id="jobRequestDao" class="com.ar0ne.app.dao.JobRequestDaoImpl">
+        <property name="dataSource" ref="dataSource" />
+    </bean>-->
     
     <bean id="userDao" class="com.ar0ne.app.dao.UserDaoImpl">
         <property name="dataSource" ref="dataSource" />
@@ -42,5 +59,4 @@
     
     <mvc:resources mapping="/resources/**" location="/resources/" />
     
- 
 </beans>

@@ -10,11 +10,11 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
     </bean>
     
     <bean id="vacancyService" class="com.ar0ne.app.service.VacancyServiceImpl">
-        <property name="userDao" ref="userDao"/>
+        <property name="vacancyDao" ref="vacancyDao"/>
     </bean>
     
     <bean id="jobRequestService" class="com.ar0ne.app.service.JobRequestServiceImpl">
-        <property name="userDao" ref="userDao"/>
+        <property name="jobRequestDao" ref="jobRequestDao"/>
     </bean>
     
     

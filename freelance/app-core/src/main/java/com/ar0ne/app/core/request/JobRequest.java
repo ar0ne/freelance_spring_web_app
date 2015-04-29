@@ -43,6 +43,10 @@ public class JobRequest {
     public long getVacancyId() {
         return vacancyId;
     }
+    
+    public boolean getStatus() {
+        return status;
+    }
 
     public void setComment(String comment) {
         this.comment = comment;
