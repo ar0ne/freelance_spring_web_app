@@ -22,7 +22,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void addUser(UserAbstract user) {
         String sql = "INSERT INTO users "
-                + "(LOGIN, PASSWORD, NAME, is_admin) VALUES (?, ?, ?, ?)";
+                + "(LOGIN, PASSWORD, NAME, IS_ADMIN) VALUES (?, ?, ?, ?)";
         Connection conn = null;
 
         try {
@@ -71,7 +71,7 @@ public class UserDaoImpl implements UserDao {
             UserAbstract user = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                if(rs.getBoolean("is_admin") == true) {
+                if(rs.getBoolean("IS_ADMIN") == true) {
                     user = new Admin(
                             rs.getLong("USER_ID"),
                             rs.getString("NAME"),
@@ -116,7 +116,7 @@ public class UserDaoImpl implements UserDao {
             UserAbstract user = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                if (rs.getBoolean("is_admin") == true) {
+                if (rs.getBoolean("IS_ADMIN") == true) {
                     user = new Admin(
                             rs.getLong("USER_ID"),
                             rs.getString("NAME"),
@@ -176,7 +176,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(UserAbstract user) {
-        String sql = "UPDATE users SET LOGIN = ?, NAME = ?, PASSWORD = ?, is_admin = ? WHERE USER_ID = ?";
+        String sql = "UPDATE users SET LOGIN = ?, NAME = ?, PASSWORD = ?, IS_ADMIN = ? WHERE USER_ID = ?";
 
         Connection conn = null;
 
@@ -223,7 +223,7 @@ public class UserDaoImpl implements UserDao {
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()) {
-                if (rs.getBoolean("is_admin") == true) {
+                if (rs.getBoolean("IS_ADMIN") == true) {
                     user = new Admin(
                             rs.getLong("USER_ID"),
                             rs.getString("NAME"),

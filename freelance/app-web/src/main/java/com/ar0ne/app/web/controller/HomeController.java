@@ -1,5 +1,6 @@
 package com.ar0ne.app.web.controller;
 
+import com.ar0ne.app.core.user.Admin;
 import com.ar0ne.app.core.user.Client;
 import com.ar0ne.app.core.user.UserAbstract;
 import com.ar0ne.app.service.UserService;
@@ -73,6 +74,11 @@ public class HomeController {
         } else {
             modelAndView = new ModelAndView("userProfile");
             modelAndView.addObject("user", user);
+            System.out.println(user);
+            if (user instanceof Admin) {
+                List<UserAbstract> userList = userService.getAllUsers();
+                modelAndView.addObject("userList", userList);
+            }
         }
         
         return modelAndView;

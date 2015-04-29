@@ -70,15 +70,39 @@
                 </table>
             </form>
         </div>
+                    
+        <c:if test="${not empty userList}">
+            <h4>Table of users</h4>
+            <div id="users_table">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Login</th>
+                        <th>Name</th>
+                        <th>URL</th>
+                    </tr>
+                <c:forEach items="${userList}" var="user">
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.login}</td>
+                        <td>${user.name}</td>
+                        <td><a href='<spring:url value="/userProfile/${user.id}" ></spring:url>'>See profile</a></td>
+                    </tr>
+                </c:forEach>
+                </table>
+            </div>
+        </c:if>
+        
+                    
                             
-    <script src="<c:url value='/resources/js/jquery.min.js'/>" ></script>
-    <script type="text/javascript">
-        $(function() {
-            $("#update_profile__button").click(function() {
-                $("#user_profile, #update_profile_form").toggle("slow");
+        <script src="<c:url value='/resources/js/jquery.min.js'/>" ></script>
+        <script type="text/javascript">
+            $(function() {
+                $("#update_profile__button").click(function() {
+                    $("#user_profile, #update_profile_form").toggle("slow");
+                });
             });
-        });
-    </script>
+        </script>
         
     </body>
 </html>
