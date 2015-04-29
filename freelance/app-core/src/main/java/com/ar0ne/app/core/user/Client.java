@@ -1,6 +1,6 @@
 package com.ar0ne.app.core.user;
 
-import com.ar0ne.app.core.request.RequestAbstract;
+import com.ar0ne.app.core.request.*;
 import java.util.List;
 
 /**
@@ -9,13 +9,13 @@ import java.util.List;
  */
 public class Client extends UserAbstract{
     
-    private List<RequestAbstract> requests;
+    private long                id;
+    private String              name;
+    private String              login;
+    private String              password;
     
-    private long id;
-    private String name;
-    private String login;
-    private String password;
-    
+    private List<Vacancy>       vacancys;
+    private List<JobRequest>    jobs;
     
     public Client(){
     }
@@ -27,10 +27,21 @@ public class Client extends UserAbstract{
     }
 
     public Client(long id, String name, String login, String password) {
-        this.id = id;
-        this.name = name;
-        this.login = login;
+        this.id =       id;
+        this.name =     name;
+        this.login =    login;
         this.password = password;
+    }
+    
+    public Client(long id, String name, String login, String password, 
+                List<Vacancy> vacancys,  
+                List<JobRequest> jobs) {
+        this.id =       id;
+        this.name =     name;
+        this.login =    login;
+        this.password = password;
+        this.vacancys = vacancys;
+        this.jobs =     jobs;
     }
 
     @Override
@@ -72,28 +83,38 @@ public class Client extends UserAbstract{
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
-    
-    public void createRequest(){
-        
-    }
-    
-    public void acceptRequest(){
-        
-    }
-    
-    public void closeVacancy(){
-        
+
+    public List<JobRequest> getJobs() {
+        return jobs;
     }
 
+    public List<Vacancy> getVacancys() {
+        return vacancys;
+    }
+
+    public void setJobs(List<JobRequest> jobs) {
+        this.jobs = jobs;
+    }
+
+    public void setVacancys(List<Vacancy> vacancys) {
+        this.vacancys = vacancys;
+    }
+    
+    public void addVacancy(Vacancy v) {
+        this.vacancys.add(v);
+    }
+    
+    public void addJob(JobRequest j) {
+        this.jobs.add(j);
+    }
+    
     @Override
     public String toString() {
         return "Client["
-                + " id: " + this.id 
-                + " ,login: " + this.login
-                + " ,name: " + this.name
-                + " ,password: " + this.password
+                + " id: "        + this.id 
+                + ", login: "    + this.login
+                + ", name: "     + this.name
+                + ", password: " + this.password
                 + " ]";
     }
     

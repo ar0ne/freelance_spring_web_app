@@ -74,7 +74,7 @@ public class HomeController {
         } else {
             modelAndView = new ModelAndView("userProfile");
             modelAndView.addObject("user", user);
-            System.out.println(user);
+            
             if (user instanceof Admin) {
                 List<UserAbstract> userList = userService.getAllUsers();
                 modelAndView.addObject("userList", userList);

@@ -8,4 +8,15 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
     <bean id="userService" class="com.ar0ne.app.service.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
     </bean>
+    
+    <bean id="vacancyService" class="com.ar0ne.app.service.VacancyServiceImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+    
+    <bean id="jobRequestService" class="com.ar0ne.app.service.JobRequestServiceImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+    
+    
+    
 </beans>

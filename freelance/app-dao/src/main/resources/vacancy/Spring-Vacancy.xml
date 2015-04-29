@@ -3,9 +3,8 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
  
-    <import resource="database/Spring-Datasource.xml" />
-    <import resource="user/Spring-User.xml" />
-    <import resource="vacancy/Spring-Vacancy.xml" />
-    <import resource="job_request/Spring-JobRequest.xml" />
+    <bean id="vacancyDao" class="com.ar0ne.app.dao.VacancyDaoImpl">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
  
 </beans>
