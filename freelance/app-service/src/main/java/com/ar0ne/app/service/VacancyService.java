@@ -11,6 +11,8 @@ public interface VacancyService {
     public void updateUser(Vacancy vacancy);
     public List<Vacancy> getAllVacancys();
     public Vacancy findVacancyById(long vacancyId);
+    public List<Vacancy> getAllUserVacancys(long userId);
+    public List<Vacancy> getOpenVacancy();
     
     
 }

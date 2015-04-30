@@ -1,9 +1,11 @@
 package com.ar0ne.app.web.controller;
 
+import com.ar0ne.app.core.request.Vacancy;
 import com.ar0ne.app.core.user.Admin;
 import com.ar0ne.app.core.user.Client;
 import com.ar0ne.app.core.user.UserAbstract;
 import com.ar0ne.app.service.UserService;
+import com.ar0ne.app.service.VacancyService;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class HomeController {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private VacancyService vacancyService;
         
     @RequestMapping("/")
     public String init() {
@@ -64,7 +69,7 @@ public class HomeController {
     }
     
     @RequestMapping(value="/userProfile/{id}", method = RequestMethod.GET)
-    public ModelAndView userProfilePage(@PathVariable("id") Long userId) {
+    public ModelAndView userProfilePage(@PathVariable("id") long userId) {
         UserAbstract user = userService.findUserById(userId);
         
         ModelAndView modelAndView;
@@ -75,9 +80,14 @@ public class HomeController {
             modelAndView = new ModelAndView("userProfile");
             modelAndView.addObject("user", user);
             
+            modelAndView.addObject("userId", userId);
+            
             if (user instanceof Admin) {
                 List<UserAbstract> userList = userService.getAllUsers();
                 modelAndView.addObject("userList", userList);
+            } else if(user instanceof Client) {
+                List<Vacancy> vacancyList = vacancyService.getAllUserVacancys(userId);
+                modelAndView.addObject("vacancyList", vacancyList);
             }
         }
         
@@ -113,5 +123,28 @@ public class HomeController {
         
         return "redirect:/userProfile/" + userId;
     }
-
+    
+    @RequestMapping(value = { "/userProfile/{id}/find_job", "/userProfile/find_job" }, method = RequestMethod.GET)
+    public ModelAndView findJobPage(@PathVariable("id") long userId) {
+        
+        ModelAndView modelAndView = new ModelAndView("find_job");
+        
+        List<Vacancy> vacancyList = vacancyService.getOpenVacancy();
+        modelAndView.addObject("vacancyList", vacancyList);
+        
+        return modelAndView;
+    }
+    
+    @RequestMapping(value = "/userProfile/{id}/add_vacancy", method = RequestMethod.GET)
+    public ModelAndView addVacancyPage(@PathVariable("id") long userId) {
+        
+        ModelAndView modelAndView = new ModelAndView("add_vacancy");
+        modelAndView.addObject("userId", userId);
+        
+        return modelAndView;
+    }
+    
+    
+    // submitNewVacancy     POST
+    
 }

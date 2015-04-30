@@ -92,17 +92,31 @@
                 </table>
             </div>
         </c:if>
+            
+        <c:if test="${not empty vacancyList}">
+            <h4>My Vacancy</h4>
+            <div id="vacancy_table">
+                <table>
+                <c:forEach items="${vacancyList}" var="vacancy">
+                    <tr>
+                        <td>${vacancy.title}</td>
+                        <td>${vacancy.status}</td>
+                    </tr>
+                </c:forEach>
+                </table>
+            </div>
+        </c:if>
         
-                    
-                            
+        <c:if test="${empty userList}">
+            
+            <a href='${userId}/find_job'>Find job</a><br/>
+
+            <a href='${userId}/add_vacancy'>Add vacancy</a>            
+        
+        </c:if>         
+            
         <script src="<c:url value='/resources/js/jquery.min.js'/>" ></script>
-        <script type="text/javascript">
-            $(function() {
-                $("#update_profile__button").click(function() {
-                    $("#user_profile, #update_profile_form").toggle("slow");
-                });
-            });
-        </script>
+        <script type="text/javascript" src="<c:url value='/resources/js/user_profile.js'/>" ></script>
         
     </body>
 </html>

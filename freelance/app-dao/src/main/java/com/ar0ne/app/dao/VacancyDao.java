@@ -12,6 +12,10 @@ public interface VacancyDao {
     public void updateUser(Vacancy vacancy);
 
     public List<Vacancy> getAllVacancys();
+    
+    public List<Vacancy> getAllUserVacancys(long userId);
+    
+    public List<Vacancy> getOpenVacancy();
 
     public Vacancy findVacancyById(long vacancyId);
 

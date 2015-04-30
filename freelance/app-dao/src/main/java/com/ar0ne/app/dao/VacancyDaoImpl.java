@@ -89,6 +89,22 @@ public class VacancyDaoImpl implements VacancyDao {
         namedParameterJdbcTemplate.update( sql , parameters );
     }
     
+    @Override
+    public List<Vacancy> getAllUserVacancys(long userId) {
+        
+        Map<String, Object> parameters = new HashMap(2);
+        parameters.put("userId", userId);
+        
+        //String sql = "SELECT users.NAME, vacancys.* FROM users LEFT JOIN vacancys ON vacancys.USER_ID = users.USER_ID WHERE vacancys.USER_ID = :userId";
+        String sql = "SELECT * FROM vacancys WHERE USER_ID = :userId";
+        return namedParameterJdbcTemplate.query(sql, parameters, new VacancyMapper());
+    }
+    
+    @Override
+    public List<Vacancy> getOpenVacancy() {
+        String sql = "SELECT * FROM vacancys WHERE VACANCY_STATUS = 0";
+        return namedParameterJdbcTemplate.query(sql, new VacancyMapper());
+    }
     
     
 

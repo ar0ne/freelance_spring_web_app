@@ -1,0 +1,32 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Find Job Page</title>
+    </head>
+    <body>
+        <h1>List of vacancy:</h1>
+        
+        <c:if test="${not empty vacancyList}">
+            <div id="vacancy_list">
+                
+                <c:forEach items="${vacancyList}" var="vacancy">
+                    <div class="vacancy">
+                        <h5>${vacancy.title}</h5>
+                        <p>${vacancy.description}</p><br/>
+                        <p>Author: </p>
+                        <p>Payment: ${vacancy.payment}</p><br/>
+                        <p>Date: ${vacancy.dateAdded}</p><br/>
+                        <a href='<spring:url value="/vacancy/${vacancy.id}" ></spring:url>'>More info...</a>
+                    </div>
+                    <br/>
+                </c:forEach>
+                
+            </div>
+        </c:if>
+        
+    </body>
+</html>
