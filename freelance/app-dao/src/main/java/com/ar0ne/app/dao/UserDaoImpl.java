@@ -22,7 +22,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void addUser(UserAbstract user) {
         String sql = "INSERT INTO users "
-                + "(LOGIN, PASSWORD, NAME, IS_ADMIN) VALUES (?, ?, ?, ?)";
+                + "(LOGIN, PASSWORD, NAME, ENABLED) VALUES (?, ?, ?, ?)";
         Connection conn = null;
 
         try {
@@ -71,7 +71,7 @@ public class UserDaoImpl implements UserDao {
             UserAbstract user = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                if(rs.getBoolean("IS_ADMIN") == true) {
+                if(rs.getBoolean("ENABLED") == true) {
                     user = new Admin(
                             rs.getLong("USER_ID"),
                             rs.getString("NAME"),
@@ -116,7 +116,7 @@ public class UserDaoImpl implements UserDao {
             UserAbstract user = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                if (rs.getBoolean("IS_ADMIN") == true) {
+                if (rs.getBoolean("ENABLED") == true) {
                     user = new Admin(
                             rs.getLong("USER_ID"),
                             rs.getString("NAME"),
@@ -223,7 +223,7 @@ public class UserDaoImpl implements UserDao {
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()) {
-                if (rs.getBoolean("IS_ADMIN") == true) {
+                if (rs.getBoolean("ENABLED") == true) {
                     user = new Admin(
                             rs.getLong("USER_ID"),
                             rs.getString("NAME"),

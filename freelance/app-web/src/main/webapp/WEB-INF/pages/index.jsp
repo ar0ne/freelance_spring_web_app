@@ -10,14 +10,21 @@
     </head>
     <body>
         <div id="header">
-            <a href='<spring:url value="/sign_in" ></spring:url>'>Sign in</a>
-            <a href='<spring:url value="/sign_up" ></spring:url>'>Sign up</a>
+            
+            <c:if test="${pageContext.request.userPrincipal.name == null}">
+                <a href='<spring:url value="/login" ></spring:url>'>Sign in</a>
+                <a href='<spring:url value="/sign_up" ></spring:url>'>Sign up</a>
+            </c:if>
+                
+            <c:if test="${pageContext.request.userPrincipal.name != null}">
+                <h2>Welcome : <c:out value="${pageContext.request.userPrincipal.name}" /> 
+                    | <a href='<spring:url value="/logout" ></spring:url>'> Logout</a></h2>  
+            </c:if>
         </div>
         
         <c:forEach items="${users}" var="user">
             ${user.id} ${user.login} 
         </c:forEach>
-        
         
         
     </body>

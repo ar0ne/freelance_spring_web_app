@@ -5,16 +5,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>User Profile Page</title>
+        <title>Admin Profile Page</title>
     </head>
     <body>
-        <h1>User Profile Page!</h1>
-        
         <c:if test="${pageContext.request.userPrincipal.name != null}">
-		<h2>Welcome : <c:out value="${pageContext.request.userPrincipal.name}" /> 
-                 | <a href='<spring:url value="/logout" ></spring:url>'> Logout</a></h2>  
+            <h2>Welcome : <c:out value="${pageContext.request.userPrincipal.name}" /> 
+             | <a href='<spring:url value="/login?logout" ></spring:url>'> Logout</a></h2>  
 	</c:if>
-                
+                    
         <div id="user_profile" >
             <table>
                 <tbody>
@@ -37,9 +35,9 @@
         <c:if test="${pageContext.request.userPrincipal.name == user.login}" >
             
             <a href="#" id="update_profile__button">Update Profile</a>
-               
+        
             <div id="update_profile_form" style="display:none">        
-                <form action="submitUpdateUserProfile" method="post">
+                <form action="submitUpdateAdminProfile" method="post">
                     <table>
                         <tr>
                             <td>
@@ -66,8 +64,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <input type="hidden" name="id" value="${user.id}"/><br/>
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <input type="hidden" name="id" value="${user.id}"/><br/>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </tr>
                         <tr>
                             <td>
@@ -77,34 +75,36 @@
 
                     </table>
                 </form>
-            </div>
-        
-                                
-            <c:if test="${not empty vacancyList }">
-
-                <h4>My Vacancy</h4>
-                <div id="vacancy_table">
-                    <table>
-                    <c:forEach items="${vacancyList}" var="vacancy">
-                        <tr>
-                            <td>${vacancy.title}</td>
-                            <td>${vacancy.status}</td>
-                        </tr>
-                    </c:forEach>
-                    </table>
-                </div>
-
-            </c:if>
-        
-            <a href='${userId}/find_job'>Find job</a><br/>
-
-            <a href='${userId}/add_vacancy'>Add vacancy</a>            
- 
+            </div>            
             
         </c:if>
             
+        <c:if test="${not empty userList}">
+            <h4>Table of users</h4>
+            <div id="users_table">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Login</th>
+                        <th>Name</th>
+                        <th>URL</th>
+                    </tr>
+                    <c:forEach items="${userList}" var="user">
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.login}</td>
+                            <td>${user.name}</td>
+                            <td><a href='<spring:url value="/userProfile/${user.id}" ></spring:url>'>See profile</a></td>
+                            </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </c:if>    
+            
+            
         <script src="<c:url value='/resources/js/jquery.min.js'/>" ></script>
         <script type="text/javascript" src="<c:url value='/resources/js/user_profile.js'/>" ></script>
-        
+
+
     </body>
 </html>

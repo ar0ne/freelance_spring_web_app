@@ -1,10 +1,15 @@
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `vacancys`;
+DROP TABLE IF EXISTS `job_requests`;
+DROP TABLE IF EXISTS `user_roles`;
+
 CREATE TABLE IF NOT EXISTS `users` (
   `USER_ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `LOGIN` VARCHAR(100) NOT NULL,
   `PASSWORD` VARCHAR(100) NOT NULL,
   `NAME` VARCHAR(100) NOT NULL,
   `ABOUT` VARCHAR(300),
-  `IS_ADMIN` BOOLEAN,
+  `ENABLED` BOOLEAN,
   PRIMARY KEY (`USER_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -29,11 +34,19 @@ CREATE TABLE IF NOT EXISTS `job_requests` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-INSERT INTO `users` (`USER_ID`, `LOGIN`, `PASSWORD`, `NAME`, `ABOUT` , `IS_ADMIN`) VALUES
+CREATE TABLE IF NOT EXISTS `user_roles` (
+  `USER_ROLE_ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `USER_ID` INT(10) UNSIGNED NOT NULL,
+  `ROLE` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`USER_ROLE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `users` (`USER_ID`, `LOGIN`, `PASSWORD`, `NAME`, `ABOUT` , `ENABLED`) VALUES
 (1, 'ar1', '123', 'Serj', 'I am admin! I am GOD!', 1),
-(2, 'pinkman', 'pass', 'Jessi Jackson', 'Lets cook!',0),
-(3, 'walter', 'pass', 'Walter W.', 'Jessy where is you?',0),
-(4, 'jenny', 'pass', 'Jennifer', 'Ololo',0);
+(2, 'pinkman', 'pass', 'Jessi Jackson', 'Lets cook!', 1),
+(3, 'walter', 'pass', 'Walter W.', 'Jessy where is you?', 1),
+(4, 'jenny', 'pass', 'Jennifer', 'Ololo', 1);
 
 
 INSERT INTO `vacancys` (`ID` , `USER_ID` , `PAYMENT` , `TITLE` , `DESCRIPTION`, `DATE_ADDED` , `VACANCY_STATUS` ) VALUES
@@ -43,3 +56,10 @@ INSERT INTO `vacancys` (`ID` , `USER_ID` , `PAYMENT` , `TITLE` , `DESCRIPTION`, 
 
 INSERT INTO `job_requests` ( `ID` , `VACANCY_ID` , `USER_ID` , `COMMENT` , `DATE_ADDED` , `REQUEST_STATUS` ) VALUES 
 (1, 1, 3, 'Jessy! Why are you doing that?! I am best partner to you! And I did not kill your girlfriend! Trust me!!!', '2015-04-05 21:00:09', 0);
+
+INSERT INTO `user_roles` (`USER_ROLE_ID`, `USER_ID`, `ROLE` ) VALUES 
+(1 , 1, 'ROLE_ADMIN'),
+(2 , 1, 'ROLE_USER'),
+(3 , 2, 'ROLE_USER'),
+(4 , 3, 'ROLE_USER'),
+(5 , 4, 'ROLE_USER');
