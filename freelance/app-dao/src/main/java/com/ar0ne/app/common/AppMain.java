@@ -32,10 +32,10 @@ class AppMain {
         System.out.println("Test: add new users");
 
         UserAbstract[] users = new UserAbstract[]{
-            new Admin("Serj", "ar1", "123"),
-            new Client("Jessi", "pinkman", "meth"),
-            new Client("Walter W.", "big_boss", "money"),
-            new Client("Jennifer", "jenny", "pass")
+            new Admin("Serj", "ar1", "123", true),
+            new Client("Jessi", "pinkman", "meth", true),
+            new Client("Walter W.", "big_boss", "money", true),
+            new Client("Jennifer", "jenny", "pass", false)
         };
 
         for (UserAbstract user : users) {

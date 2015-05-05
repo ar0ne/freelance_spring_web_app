@@ -87,6 +87,7 @@
                         <th>ID</th>
                         <th>Login</th>
                         <th>Name</th>
+                        <th>Status</th>
                         <th>URL</th>
                     </tr>
                     <c:forEach items="${userList}" var="user">
@@ -94,6 +95,7 @@
                             <td>${user.id}</td>
                             <td>${user.login}</td>
                             <td>${user.name}</td>
+                            <td>${user.enabled}</td>
                             <td><a href='<spring:url value="/userProfile/${user.id}" ></spring:url>'>See profile</a></td>
                             </tr>
                     </c:forEach>

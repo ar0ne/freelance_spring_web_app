@@ -19,6 +19,9 @@
             <c:if test="${pageContext.request.userPrincipal.name != null}">
                 <h2>Welcome : <c:out value="${pageContext.request.userPrincipal.name}" /> 
                     | <a href='<spring:url value="/logout" ></spring:url>'> Logout</a></h2>  
+                    
+                <a href='<spring:url value="${user_home}" ></spring:url>'>Home</a>
+                    
             </c:if>
         </div>
         

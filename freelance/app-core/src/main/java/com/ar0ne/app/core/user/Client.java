@@ -13,6 +13,7 @@ public class Client extends UserAbstract{
     private String              name;
     private String              login;
     private String              password;
+    private boolean             enabled;
     
     private List<Vacancy>       vacancys;
     private List<JobRequest>    jobs;
@@ -20,20 +21,22 @@ public class Client extends UserAbstract{
     public Client(){
     }
     
-    public Client( String name, String login, String password) {
-        this.name = name;
-        this.login = login;
+    public Client( String name, String login, String password, boolean enabled) {
+        this.name =     name;
+        this.login =    login;
         this.password = password;
+        this.enabled =  enabled;
     }
 
-    public Client(long id, String name, String login, String password) {
+    public Client(long id, String name, String login, String password, boolean enabled) {
         this.id =       id;
         this.name =     name;
         this.login =    login;
         this.password = password;
+        this.enabled =  enabled;
     }
     
-    public Client(long id, String name, String login, String password, 
+    public Client(long id, String name, String login, String password, boolean enabled,
                 List<Vacancy> vacancys,  
                 List<JobRequest> jobs) {
         this.id =       id;
@@ -42,6 +45,7 @@ public class Client extends UserAbstract{
         this.password = password;
         this.vacancys = vacancys;
         this.jobs =     jobs;
+        this.enabled =  enabled;
     }
 
     @Override
@@ -107,6 +111,16 @@ public class Client extends UserAbstract{
     public void addJob(JobRequest j) {
         this.jobs.add(j);
     }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
     
     @Override
     public String toString() {
@@ -115,6 +129,7 @@ public class Client extends UserAbstract{
                 + ", login: "    + this.login
                 + ", name: "     + this.name
                 + ", password: " + this.password
+                + ", enabled: "  + this.enabled
                 + " ]";
     }
     

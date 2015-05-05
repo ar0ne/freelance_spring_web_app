@@ -59,7 +59,6 @@ INSERT INTO `job_requests` ( `ID` , `VACANCY_ID` , `USER_ID` , `COMMENT` , `DATE
 
 INSERT INTO `user_roles` (`USER_ROLE_ID`, `USER_ID`, `ROLE` ) VALUES 
 (1 , 1, 'ROLE_ADMIN'),
-(2 , 1, 'ROLE_USER'),
-(3 , 2, 'ROLE_USER'),
-(4 , 3, 'ROLE_USER'),
-(5 , 4, 'ROLE_USER');
+(2 , 2, 'ROLE_USER'),
+(3 , 3, 'ROLE_USER'),
+(4 , 4, 'ROLE_USER');

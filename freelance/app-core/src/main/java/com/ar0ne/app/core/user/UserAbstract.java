@@ -10,6 +10,7 @@ public abstract class UserAbstract {
     private String  name;
     private String  login;
     private String  password;
+    private boolean enabled;
 
     public abstract long getId();
     public abstract void setId(long id);
@@ -19,6 +20,8 @@ public abstract class UserAbstract {
     public abstract void setLogin(String login);
     public abstract String getName();
     public abstract String getLogin();
+    public abstract boolean isEnabled();
+    public abstract void setEnabled(boolean enabled);
     
     public abstract String toString(); 
 }

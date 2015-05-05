@@ -72,8 +72,8 @@
         <security:authentication-provider>
             <security:jdbc-user-service
                 data-source-ref="dataSource"
-                users-by-username-query="SELECT LOGIN, PASSWORD, ENABLED FROM users WHERE LOGIN =?"
-                authorities-by-username-query="SELECT u1.LOGIN, u2.ROLE FROM users u1, user_roles u2 WHERE u1.USER_ID = u2.USER_ID and u1.LOGIN =?" />
+                users-by-username-query="SELECT LOGIN, PASSWORD, ENABLED FROM users WHERE LOGIN = ?"
+                authorities-by-username-query="SELECT u1.LOGIN, u2.ROLE FROM users u1, user_roles u2 WHERE u1.USER_ID = u2.USER_ID and u1.LOGIN = ?" />
         </security:authentication-provider>
     </security:authentication-manager>
     

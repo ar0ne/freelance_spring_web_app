@@ -6,25 +6,28 @@ package com.ar0ne.app.core.user;
  */
 public class Admin extends UserAbstract {
     
-    private long id;
-    private String name;
-    private String login;
-    private String password;
+    private long        id;
+    private String      name;
+    private String      login;
+    private String      password;
+    private boolean     enabled;
     
     public Admin() {
     }
     
-    public Admin(String name, String login, String password) {
-        this.name = name;
-        this.login = login;
+    public Admin(String name, String login, String password, boolean enabled) {
+        this.name =     name;
+        this.login =    login;
         this.password = password;
+        this.enabled =  enabled;
     }
 
-    public Admin(long id, String name, String login, String password) {
-        this.id = id;
-        this.name = name;
-        this.login = login;
+    public Admin(long id, String name, String login, String password, boolean enabled) {
+        this.id =       id;
+        this.name =     name;
+        this.login =    login;
         this.password = password;
+        this.enabled =  enabled;
     }
     
     @Override
@@ -66,14 +69,25 @@ public class Admin extends UserAbstract {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
     
     @Override
     public String toString() {
         return "Admin["
-                +" id: " + this.id
-                + " ,login: " + this.login
-                + " ,name: " + this.name
-                + " ,password: " + this.password
+                +" id: "         + this.id
+                + ", login: "    + this.login
+                + ", name: "     + this.name
+                + ", password: " + this.password
+                + ", enabled: "  + this.enabled
                 + " ]";
     }
 

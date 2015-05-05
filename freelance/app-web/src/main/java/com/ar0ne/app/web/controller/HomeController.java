@@ -9,6 +9,7 @@ import com.ar0ne.app.service.VacancyService;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,31 +35,29 @@ public class HomeController {
         ModelAndView view = new ModelAndView("index", "users", users);
         //view.setViewName("index");
         
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String login = auth.getName();
+        
+        if(login != null) {
+            UserAbstract user = userService.findUserByLogin(login);
+            if (user != null) {
+                String home_url = "";
+                home_url += (user instanceof Client ? "/userProfile/" : "/adminProfile/");
+                home_url += user.getId();
+
+                view.addObject("user_home", home_url);
+            }
+        }
+        
         return view;
     }
     
-//    @RequestMapping("/sign_in")
-//    public String signInPage() {
-//        return "sign_in";
-//    }
     
     @RequestMapping("/sign_up")
     public String signUpPage() {
         return "sign_up";
     }
     
-//    @RequestMapping(value = "/submitDataSignIn", method = RequestMethod.POST)
-//    public String signInAction(@RequestParam("Login")       String userLogin, 
-//                               @RequestParam("Password")    String userPassword ) {
-//        
-//        UserAbstract user = userService.findUserByLogin(userLogin);
-//        
-//        if (user != null && user.getPassword().equals( userPassword )) {
-//            return "redirect:/userProfile/" + user.getId();
-//        }
-//        
-//        return "redirect:/sign_in";
-//    }
     
 //    @RequestMapping(value = "/login", method = RequestMethod.GET)
 //    public ModelAndView login(
@@ -143,7 +142,7 @@ public class HomeController {
         UserAbstract user = userService.findUserByLogin(userLogin);
 
         if (user == null) {
-            user = new Client(userName, userLogin, userPassword);
+            user = new Client(userName, userLogin, userPassword, true);
             userService.addUser(user);
             return "redirect:/login";
         }
@@ -158,7 +157,7 @@ public class HomeController {
                                             @RequestParam("password")  String   userPassword,
                                             @RequestParam("id")        Integer  userId) {
         
-        userService.updateUser(new Client(userId, userName, userLogin, userPassword));
+        userService.updateUser(new Client(userId, userName, userLogin, userPassword, true));
         
         return "redirect:/userProfile/" + userId;
     }
@@ -169,7 +168,7 @@ public class HomeController {
             @RequestParam("password") String userPassword,
             @RequestParam("id") Integer userId) {
 
-        userService.updateUser(new Admin(userId, userName, userLogin, userPassword));
+        userService.updateUser(new Admin(userId, userName, userLogin, userPassword, true));
 
         return "redirect:/adminProfile/" + userId;
     }

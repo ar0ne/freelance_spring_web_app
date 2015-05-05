@@ -12,7 +12,7 @@
         
         <c:if test="${pageContext.request.userPrincipal.name != null}">
 		<h2>Welcome : <c:out value="${pageContext.request.userPrincipal.name}" /> 
-                 | <a href='<spring:url value="/logout" ></spring:url>'> Logout</a></h2>  
+                 | <a href='<spring:url value="/logout" ></spring:url>'> Logout</a> </h2>  
 	</c:if>
                 
         <div id="user_profile" >
@@ -96,9 +96,9 @@
 
             </c:if>
         
-            <a href='${userId}/find_job'>Find job</a><br/>
+            <a href='/find_job'>Find job</a><br/>
 
-            <a href='${userId}/add_vacancy'>Add vacancy</a>            
+            <a href='/add_vacancy'>Add vacancy</a>            
  
             
         </c:if>
