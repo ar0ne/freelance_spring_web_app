@@ -13,20 +13,25 @@
             
             <c:if test="${pageContext.request.userPrincipal.name == null}">
                 <a href='<spring:url value="/login" ></spring:url>'>Sign in</a>
-                <a href='<spring:url value="/sign_up" ></spring:url>'>Sign up</a>
+                <a href='<spring:url value="/signUp" ></spring:url>'>Sign up</a>
             </c:if>
                 
             <c:if test="${pageContext.request.userPrincipal.name != null}">
                 <h2>Welcome : <c:out value="${pageContext.request.userPrincipal.name}" /> 
                     | <a href='<spring:url value="/logout" ></spring:url>'> Logout</a></h2>  
                     
-                <a href='<spring:url value="${user_home}" ></spring:url>'>Home</a>
+                <a href='<spring:url value="${user_home}" ></spring:url>'>Your profile</a> <br/>
+                    
+                <a href='<spring:url value="/addVacancy" ></spring:url>'>Add vacancy</a><br/>
+                    
+                <a href='<spring:url value="/findJob" ></spring:url>'>Find job</a><br/>
+                    
                     
             </c:if>
         </div>
         
         <c:forEach items="${users}" var="user">
-            ${user.id} ${user.login} 
+            ${user.id} ${user.login} <br/>
         </c:forEach>
         
         

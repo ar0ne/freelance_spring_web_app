@@ -10,7 +10,7 @@
     <body>
         <c:if test="${pageContext.request.userPrincipal.name != null}">
             <h2>Welcome : <c:out value="${pageContext.request.userPrincipal.name}" /> 
-             | <a href='<spring:url value="/login?logout" ></spring:url>'> Logout</a></h2>  
+             | <a href='<spring:url value="/logout" ></spring:url>'> Logout</a></h2>  
 	</c:if>
                     
         <div id="user_profile" >
@@ -37,7 +37,7 @@
             <a href="#" id="update_profile__button">Update Profile</a>
         
             <div id="update_profile_form" style="display:none">        
-                <form action="submitUpdateAdminProfile" method="post">
+                <form action="<spring:url value="/adminProfile/submitUpdateAdminProfile" ></spring:url>" method="post">
                     <table>
                         <tr>
                             <td>

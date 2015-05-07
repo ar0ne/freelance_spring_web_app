@@ -39,7 +39,7 @@
             <a href="#" id="update_profile__button">Update Profile</a>
                
             <div id="update_profile_form" style="display:none">        
-                <form action="submitUpdateUserProfile" method="post">
+                <form action="<spring:url value="/userProfile/submitUpdateUserProfile" ></spring:url>" method="post">
                     <table>
                         <tr>
                             <td>
@@ -96,15 +96,18 @@
 
             </c:if>
         
-            <a href='/find_job'>Find job</a><br/>
+            
+            <br/>    
+                
+            <a href='<spring:url value="/findJob" ></spring:url>'>Find job</a><br/>
 
-            <a href='/add_vacancy'>Add vacancy</a>            
+            <a href='<spring:url value="/addVacancy" ></spring:url>'>Add vacancy</a>            
  
             
         </c:if>
             
         <script src="<c:url value='/resources/js/jquery.min.js'/>" ></script>
-        <script type="text/javascript" src="<c:url value='/resources/js/user_profile.js'/>" ></script>
+        <script src="<c:url value='/resources/js/user_profile.js'/>" ></script>
         
     </body>
 </html>

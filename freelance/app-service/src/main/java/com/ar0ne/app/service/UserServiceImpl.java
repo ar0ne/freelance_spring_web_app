@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService{
     
     @Override
     public void addUser(UserAbstract user) {
-        Assert.isNull(user.getId(), "user Id must to be NULL");
+        //Assert.isNull(user.getId(), "user Id must to be NULL");
         Assert.notNull(user.getLogin(), "user login can't be empty");
         Assert.notNull(user.getName(), "User name can't be empty");
         Assert.notNull(user.getPassword(), "User password can't be empty");

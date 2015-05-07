@@ -60,7 +60,7 @@ public class VacancyDaoImpl implements VacancyDao {
     @Override
     public void addVacancy(Vacancy vacancy) {
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(vacancy);
-        String sql = "INSERT INTO vacancy (ID, USER_ID , PAYMENT , TITLE , DESCRIPTION, DATE_ADDED , VACANCY_STATUS ) VALUES (:id, :userId, :payment, :title, :description, NOW(), :status)";
+        String sql = "INSERT INTO vacancys ( USER_ID , PAYMENT , TITLE , DESCRIPTION, DATE_ADDED , VACANCY_STATUS ) VALUES ( :userId, :payment, :title, :description, NOW(), :status)";
         namedParameterJdbcTemplate.update( sql, parameterSource, keyHolder);
         //return keyHolder.getKey().longValue();
     }

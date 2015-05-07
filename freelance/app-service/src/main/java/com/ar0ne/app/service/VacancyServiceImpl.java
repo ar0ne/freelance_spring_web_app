@@ -24,7 +24,7 @@ public class VacancyServiceImpl implements VacancyService {
 
     @Override
     public void addVacancy(Vacancy vacancy) {
-        Assert.isNull(vacancy.getId(),           "Vacancy ID must to be NULL");
+        //Assert.isNull(vacancy.getId(),           "Vacancy ID must to be NULL");
         Assert.notNull(vacancy.getTitle(),       "Vacancy Title must to be Not NULL");
         Assert.notNull(vacancy.getDescription(), "Vacancy Description must to be Not NULL");
         

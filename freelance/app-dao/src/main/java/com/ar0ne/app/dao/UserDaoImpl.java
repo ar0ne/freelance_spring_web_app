@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDao {
     public void addUser(UserAbstract user) {
         String sql1 = "INSERT INTO users "
                 + "(LOGIN, PASSWORD, NAME, ENABLED) VALUES (?, ?, ?, ?)";
-        String sql2 = "INSERT INTO users_roles "
+        String sql2 = "INSERT INTO user_roles "
                 + "(USER_ID, ROLE) VALUES (?, ?)";
         Connection conn = null;
 

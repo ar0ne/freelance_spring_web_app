@@ -34,7 +34,7 @@
                         <input type="password" name="Password"/><br/>
                     </td>
                 </tr>
-                
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
                 <tr>
                     <td>
                         <input type="submit" value="Submit"/>

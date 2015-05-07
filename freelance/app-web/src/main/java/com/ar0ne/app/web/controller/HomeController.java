@@ -29,7 +29,7 @@ public class HomeController {
       
     
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
-    public ModelAndView homePage() {
+    public ModelAndView indexPage() {
         
         List<UserAbstract> users = userService.getAllUsers();
         ModelAndView view = new ModelAndView("index", "users", users);
@@ -53,9 +53,9 @@ public class HomeController {
     }
     
     
-    @RequestMapping("/sign_up")
+    @RequestMapping("/signUp")
     public String signUpPage() {
-        return "sign_up";
+        return "signUp";
     }
     
     
@@ -78,13 +78,24 @@ public class HomeController {
 //
 //    }
     
-//    @RequestMapping("/userProfile")
-//    public String userProfile() {
-//        return "redirect:/login";
-//    }
+    @RequestMapping("/userProfile")
+    public String userProfilePage() {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String login = auth.getName();
+        
+        if(login != null) {
+            UserAbstract user = userService.findUserByLogin(login);
+            if (user != null) {
+                return "redirect:/userProfile/" + user.getId();
+            }
+        }
+        
+        return "redirect:/index";
+    }
     
     @RequestMapping("/logout")
-    public String logout() {
+    public String logoutAction() {
         SecurityContextHolder.clearContext();
         return "redirect:/index";
     }
@@ -96,7 +107,7 @@ public class HomeController {
         ModelAndView modelAndView;
         
         if(user == null) {
-            modelAndView = new ModelAndView("redirect:/index");
+            modelAndView = new ModelAndView("redirect:/userProfile");
         } else {
             modelAndView = new ModelAndView("userProfile");
             modelAndView.addObject("user", user);
@@ -140,14 +151,14 @@ public class HomeController {
                                 @RequestParam("Password")   String userPassword) {
 
         UserAbstract user = userService.findUserByLogin(userLogin);
-
+        
         if (user == null) {
-            user = new Client(userName, userLogin, userPassword, true);
+            user = new Client( userName, userLogin, userPassword, true);
             userService.addUser(user);
             return "redirect:/login";
         }
 
-        return "redirect:/sign_up";
+        return "redirect:/signUp";
     }
     
     
@@ -155,7 +166,7 @@ public class HomeController {
     public String updateUserProfileAction(  @RequestParam("name")      String   userName,
                                             @RequestParam("login")     String   userLogin,
                                             @RequestParam("password")  String   userPassword,
-                                            @RequestParam("id")        Integer  userId) {
+                                            @RequestParam("id")        long     userId) {
         
         userService.updateUser(new Client(userId, userName, userLogin, userPassword, true));
         
@@ -174,10 +185,10 @@ public class HomeController {
     }
     
     
-    @RequestMapping(value = { "/userProfile/{id}/find_job" }, method = RequestMethod.GET)
-    public ModelAndView findJobPage(@PathVariable("id") long userId) {
+    @RequestMapping(value = { "/findJob" }, method = RequestMethod.GET)
+    public ModelAndView findJobPage() {
         
-        ModelAndView modelAndView = new ModelAndView("find_job");
+        ModelAndView modelAndView = new ModelAndView("findJob");
         
         List<Vacancy> vacancyList = vacancyService.getOpenVacancy();
         modelAndView.addObject("vacancyList", vacancyList);
@@ -185,16 +196,45 @@ public class HomeController {
         return modelAndView;
     }
     
-    @RequestMapping(value = "/userProfile/{id}/add_vacancy", method = RequestMethod.GET)
-    public ModelAndView addVacancyPage(@PathVariable("id") long userId) {
+    @RequestMapping(value = "/addVacancy", method = RequestMethod.GET)
+    public ModelAndView addVacancyPage() {
         
-        ModelAndView modelAndView = new ModelAndView("add_vacancy");
-        modelAndView.addObject("userId", userId);
+        ModelAndView modelAndView = new ModelAndView("addVacancy");
+//        modelAndView.addObject("userId", userId);
         
         return modelAndView;
     }
     
     
-    // submitNewVacancy     POST
+    //      POST
+    @RequestMapping(value = "/submitNewVacancy", method = RequestMethod.POST)
+    public String addNewVacancyAction(  @RequestParam("title")          String   title,
+                                        @RequestParam("description")    String   description,
+                                        @RequestParam("payment")        String   payment ) {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String login = auth.getName();
+
+        if (login != null) {
+            UserAbstract user = userService.findUserByLogin(login);
+            if (user != null) {
+        
+                Vacancy vacancy = new Vacancy();
+                vacancy.setPayment(payment);
+                vacancy.setDescription(description);
+                vacancy.setTitle(title);
+                vacancy.setStatus(false);
+                vacancy.setUserId(user.getId());
+
+                vacancyService.addVacancy(vacancy);
+            } else {
+                System.out.println("User didn't find!");
+            }
+        } else {
+            System.out.println("Problem with authentification!");
+        }
+        
+        return "redirect:/userProfile";
+    }
     
 }

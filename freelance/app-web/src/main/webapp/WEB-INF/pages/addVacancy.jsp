@@ -38,7 +38,7 @@
                         </td>
                     </tr>
                     <tr>
-                    <input type="hidden" name="id" value="${userId}"/><br/>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </tr>
                     <tr>
                         <td>

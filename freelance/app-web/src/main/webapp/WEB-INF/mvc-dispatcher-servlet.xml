@@ -65,6 +65,7 @@
         <security:intercept-url pattern="/userProfile/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
         <security:intercept-url pattern="/adminProfile/**" access="hasRole('ROLE_ADMIN')" />
         <security:intercept-url pattern="/login*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
+        <security:intercept-url pattern="/signUp" access="permitAll" />
         <security:logout logout-success-url="/index" invalidate-session="true" delete-cookies="JSESSIONID" />
     </security:http>
     
