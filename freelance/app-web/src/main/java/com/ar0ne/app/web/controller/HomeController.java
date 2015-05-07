@@ -126,7 +126,7 @@ public class HomeController {
     public ModelAndView adminProfilePage(@PathVariable("id") long userId) {
         UserAbstract user = userService.findUserById(userId);
 
-        ModelAndView modelAndView;
+        ModelAndView modelAndView = null;
 
         if (user == null) {
             modelAndView = new ModelAndView("redirect:/index");
@@ -185,56 +185,6 @@ public class HomeController {
     }
     
     
-    @RequestMapping(value = { "/findJob" }, method = RequestMethod.GET)
-    public ModelAndView findJobPage() {
-        
-        ModelAndView modelAndView = new ModelAndView("findJob");
-        
-        List<Vacancy> vacancyList = vacancyService.getOpenVacancy();
-        modelAndView.addObject("vacancyList", vacancyList);
-        
-        return modelAndView;
-    }
     
-    @RequestMapping(value = "/addVacancy", method = RequestMethod.GET)
-    public ModelAndView addVacancyPage() {
-        
-        ModelAndView modelAndView = new ModelAndView("addVacancy");
-//        modelAndView.addObject("userId", userId);
-        
-        return modelAndView;
-    }
-    
-    
-    //      POST
-    @RequestMapping(value = "/submitNewVacancy", method = RequestMethod.POST)
-    public String addNewVacancyAction(  @RequestParam("title")          String   title,
-                                        @RequestParam("description")    String   description,
-                                        @RequestParam("payment")        String   payment ) {
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String login = auth.getName();
-
-        if (login != null) {
-            UserAbstract user = userService.findUserByLogin(login);
-            if (user != null) {
-        
-                Vacancy vacancy = new Vacancy();
-                vacancy.setPayment(payment);
-                vacancy.setDescription(description);
-                vacancy.setTitle(title);
-                vacancy.setStatus(false);
-                vacancy.setUserId(user.getId());
-
-                vacancyService.addVacancy(vacancy);
-            } else {
-                System.out.println("User didn't find!");
-            }
-        } else {
-            System.out.println("Problem with authentification!");
-        }
-        
-        return "redirect:/userProfile";
-    }
     
 }

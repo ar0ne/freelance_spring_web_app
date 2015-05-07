@@ -33,7 +33,7 @@ public class VacancyServiceImpl implements VacancyService {
 
     @Override
     public void deleteVacancy(Long vacancyId) {
-        Assert.notNull(vacancyId,                "Vacancy Id can't be NULL");
+        Assert.notNull(vacancyId,  "Vacancy Id can't be NULL");
         Vacancy vacancy = null;
         try {
             vacancy = vacancyDao.findVacancyById(vacancyId);

@@ -52,8 +52,9 @@ public class VacancyDaoImpl implements VacancyDao {
     @Override
     public Vacancy findVacancyById(long vacancyId) {
         Map<String, Object> parameters = new HashMap(1);
-        parameters.put("ID", vacancyId);
+        parameters.put("id", vacancyId);
         String sql = "SELECT * FROM vacancys WHERE ID = :id";
+        // String sql = "SELECT vacancys.*, users.LOGIN FROM vacancys LEFT JOIN users ON vacancys.USER_ID = users.USER_ID WHERE ID = :id";
         return namedParameterJdbcTemplate.queryForObject(sql, parameters, new VacancyMapper());
     }
     

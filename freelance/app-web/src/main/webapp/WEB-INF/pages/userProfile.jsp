@@ -5,6 +5,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="_csrf" content="${_csrf.token}"/>
+        <meta name="_csrf_header" content="${_csrf.headerName}"/>
         <title>User Profile Page</title>
     </head>
     <body>
@@ -89,6 +91,8 @@
                         <tr>
                             <td>${vacancy.title}</td>
                             <td>${vacancy.status}</td>
+                            <td><a class="delete_vacancy__button" href='<spring:url value="/deleteVacancy" ></spring:url>'>Delete</a></td>
+                            <td style="display: none" class="vacancy_id">${vacancy.id}</td>
                         </tr>
                     </c:forEach>
                     </table>
