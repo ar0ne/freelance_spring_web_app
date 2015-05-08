@@ -35,17 +35,17 @@
         <property name="vacancyDao" ref="vacancyDao"/>
     </bean>
     
-<!--    <bean id="jobRequestService" class="com.ar0ne.app.service.JobRequestServiceImpl">
+    <bean id="jobRequestService" class="com.ar0ne.app.service.JobRequestServiceImpl">
         <property name="jobRequestDao" ref="jobRequestDao"/>
-    </bean>-->
+    </bean>
     
     <bean id="vacancyDao" class="com.ar0ne.app.dao.VacancyDaoImpl">
         <property name="dataSource" ref="dataSource" />
     </bean>
     
-<!--    <bean id="jobRequestDao" class="com.ar0ne.app.dao.JobRequestDaoImpl">
+    <bean id="jobRequestDao" class="com.ar0ne.app.dao.JobRequestDaoImpl">
         <property name="dataSource" ref="dataSource" />
-    </bean>-->
+    </bean>
     
     <bean id="userDao" class="com.ar0ne.app.dao.UserDaoImpl">
         <property name="dataSource" ref="dataSource" />

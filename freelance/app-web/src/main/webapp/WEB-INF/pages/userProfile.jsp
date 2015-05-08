@@ -99,6 +99,26 @@
                 </div>
 
             </c:if>
+                
+                
+
+            <c:if test="${not empty jobRequestList }">
+
+                <h4>My JobRequests</h4>
+                <div id="jobRequest_table">
+                    <table>
+                        <c:forEach items="${jobRequestList}" var="jobRequest">
+                            <tr>
+                                <td>${jobRequest.dateAdded}</td>
+                                <td>${jobRequest.comment}</td>
+                                <td>${jobRequest.status}</td>
+                                <td style="display: none" class="jobRequest_id">${jobRequest.id}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+
+            </c:if>
         
             
             <br/>    

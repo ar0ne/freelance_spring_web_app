@@ -1,7 +1,18 @@
 package com.ar0ne.app.dao;
 
+import com.ar0ne.app.core.request.JobRequest;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.sql.DataSource;
+import org.joda.time.LocalDateTime;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
@@ -15,4 +26,63 @@ public class JobRequestDaoImpl implements JobRequestDao {
     public void setDataSource(DataSource dataSource) {
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
+    
+    public class JobRequestMapper implements RowMapper<JobRequest> {
+        @Override
+        public JobRequest mapRow(ResultSet rs, int i) throws SQLException {
+            JobRequest jobRequest = new JobRequest();
+            jobRequest.setId            (rs.getLong("ID"));
+            jobRequest.setVacancyId     (rs.getLong("VACANCY_ID"));
+            jobRequest.setUserId        (rs.getLong("USER_ID"));
+            jobRequest.setComment       (rs.getString("COMMENT"));
+            jobRequest.setDateAdded     (new LocalDateTime(rs.getTimestamp("DATE_ADDED")));
+            jobRequest.setStatus        (rs.getBoolean("REQUEST_STATUS"));
+            return jobRequest;
+        }
+    }
+    
+
+    @Override
+    public void addJobRequest(JobRequest jobRequest) {
+        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(jobRequest);
+        String sql = "INSERT INTO job_requests ( VACANCY_ID, USER_ID , COMMENT , DATE_ADDED , REQUEST_STATUS ) VALUES ( :vacancyId, :userId, :comment, NOW(), :status)";
+        namedParameterJdbcTemplate.update( sql, parameterSource, keyHolder);}
+
+    @Override
+    public void deleteJobRequest(long id) {
+        Map<String, Object> parameters = new HashMap(1);
+        parameters.put("id", id);
+        String sql = "DELETE FROM job_requests  WHERE ID = :id";
+        namedParameterJdbcTemplate.update( sql , parameters);
+    }
+
+    @Override
+    public List<JobRequest> getAllJobRequests() {
+        String sql = "SELECT * FROM job_requests";
+        return namedParameterJdbcTemplate.query(sql, new JobRequestMapper());
+    }
+
+    @Override
+    public void updateJobRequest(JobRequest jobRequest) {
+        Map<String, Object> parameters = new HashMap(2);
+
+        parameters.put("id", jobRequest.getId());
+        parameters.put("vacancyId", jobRequest.getVacancyId());
+        parameters.put("userId", jobRequest.getUserId());
+        parameters.put("comment", jobRequest.getComment());
+        parameters.put("dateAdded", new Timestamp(jobRequest.getDateAdded().toDateTime().getMillis()));
+        parameters.put("status", jobRequest.getStatus());
+
+        String sql = "UPDATE job_requests SET VACANCY_ID = :vacancyId, USER_ID = :userId, COMMENT = :comment, DATE_ADDED = :dateAdded, REQUEST_STATUS = :status WHERE ID = :id";
+        namedParameterJdbcTemplate.update(sql, parameters);
+    }
+    
+    @Override
+    public JobRequest findJobRequestById(long id) {
+        Map<String, Object> parameters = new HashMap(1);
+        parameters.put("id", id);
+        String sql = "SELECT * FROM job_requests WHERE ID = :id";
+        return namedParameterJdbcTemplate.queryForObject(sql, parameters, new JobRequestMapper());
+    }
+    
 }

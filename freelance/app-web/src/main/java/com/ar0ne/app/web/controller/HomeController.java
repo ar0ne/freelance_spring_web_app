@@ -1,9 +1,11 @@
 package com.ar0ne.app.web.controller;
 
+import com.ar0ne.app.core.request.JobRequest;
 import com.ar0ne.app.core.request.Vacancy;
 import com.ar0ne.app.core.user.Admin;
 import com.ar0ne.app.core.user.Client;
 import com.ar0ne.app.core.user.UserAbstract;
+import com.ar0ne.app.service.JobRequestService;
 import com.ar0ne.app.service.UserService;
 import com.ar0ne.app.service.VacancyService;
 
@@ -26,6 +28,9 @@ public class HomeController {
     
     @Autowired
     private VacancyService vacancyService;
+    
+    @Autowired
+    private JobRequestService jobRequestService;
       
     
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
@@ -116,6 +121,9 @@ public class HomeController {
            
             List<Vacancy> vacancyList = vacancyService.getAllUserVacancys(userId);
             modelAndView.addObject("vacancyList", vacancyList);
+            
+            List<JobRequest> jobRequestList = jobRequestService.getAllJobRequests();
+            modelAndView.addObject("jobRequestList", jobRequestList);
         }
         
         return modelAndView;
