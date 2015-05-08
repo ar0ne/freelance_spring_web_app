@@ -85,4 +85,21 @@ public class JobRequestDaoImpl implements JobRequestDao {
         return namedParameterJdbcTemplate.queryForObject(sql, parameters, new JobRequestMapper());
     }
     
+    @Override
+    public List<JobRequest> getVacancysJobRequests(long vacancyId) {
+        Map<String, Object> parameters = new HashMap(1);
+        parameters.put("vacancyId", vacancyId);
+        String sql = "SELECT * FROM job_requests WHERE VACANCY_ID = :vacancyId";
+        return namedParameterJdbcTemplate.query(sql, parameters, new JobRequestMapper());
+    }
+    
+    @Override
+    public List<JobRequest> getUserJobRequests(long userId) {
+        Map<String, Object> parameters = new HashMap(1);
+        parameters.put("userId", userId);
+        String sql = "SELECT * FROM job_requests WHERE USER_ID = :userId";
+        return namedParameterJdbcTemplate.query(sql, parameters, new JobRequestMapper());
+    }
+    
+    
 }

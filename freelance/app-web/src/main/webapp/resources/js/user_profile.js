@@ -1,6 +1,7 @@
  
 ;$(function () {
-    $("#update_profile__button").click(function () {
+    $("#update_profile__button").click(function (e) {
+        e.preventDefault();
         $("#user_profile, #update_profile_form").toggle("slow");
     });
     

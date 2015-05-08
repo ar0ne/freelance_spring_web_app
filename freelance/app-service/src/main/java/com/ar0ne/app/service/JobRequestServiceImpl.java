@@ -65,4 +65,16 @@ public class JobRequestServiceImpl implements JobRequestService {
         return jobRequest;
     }
     
+    @Override
+    public List<JobRequest> getVacancysJobRequests(long vacancyId) {
+        List<JobRequest> jobRequests = jobRequestDao.getVacancysJobRequests(vacancyId);
+        return jobRequests;
+    }
+    
+    
+    @Override
+    public List<JobRequest> getUserJobRequests(long userId) {
+        List<JobRequest> jobRequests = jobRequestDao.getUserJobRequests(userId);
+        return jobRequests;
+    }
 }

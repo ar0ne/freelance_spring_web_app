@@ -122,8 +122,10 @@ public class HomeController {
             List<Vacancy> vacancyList = vacancyService.getAllUserVacancys(userId);
             modelAndView.addObject("vacancyList", vacancyList);
             
-            List<JobRequest> jobRequestList = jobRequestService.getAllJobRequests();
-            modelAndView.addObject("jobRequestList", jobRequestList);
+            List<JobRequest> jobRequestList = jobRequestService.getUserJobRequests(userId);
+            if (jobRequestList != null) {
+                modelAndView.addObject("jobRequestList", jobRequestList);
+            }
         }
         
         return modelAndView;

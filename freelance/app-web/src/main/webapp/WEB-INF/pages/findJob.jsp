@@ -8,6 +8,12 @@
         <title>Find Job Page</title>
     </head>
     <body>
+        
+        <c:if test="${pageContext.request.userPrincipal.name != null}">
+            <h2>Welcome : <c:out value="${pageContext.request.userPrincipal.name}" /> 
+                | <a href='<spring:url value="/logout" ></spring:url>'> Logout</a> </h2>  
+        </c:if>
+        
         <h1>List of vacancy:</h1>
         
         <c:if test="${not empty vacancyList}">

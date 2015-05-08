@@ -1,7 +1,9 @@
 package com.ar0ne.app.web.controller;
 
+import com.ar0ne.app.core.request.JobRequest;
 import com.ar0ne.app.core.request.Vacancy;
 import com.ar0ne.app.core.user.UserAbstract;
+import com.ar0ne.app.service.JobRequestService;
 import com.ar0ne.app.service.UserService;
 import com.ar0ne.app.service.VacancyService;
 import java.util.List;
@@ -26,6 +28,9 @@ public class VacancyController {
     
     @Autowired
     private VacancyService vacancyService;
+    
+    @Autowired
+    private JobRequestService jobRequestService;
 
     
     @RequestMapping(value = { "/findJob" }, method = RequestMethod.GET)
@@ -98,9 +103,49 @@ public class VacancyController {
                 }
             }
         }
-        
         return new ResponseEntity("", HttpStatus.NOT_FOUND);
     }
+    
+    
+    
+    @RequestMapping(value = "/addJobRequest", method = RequestMethod.POST)
+    public ResponseEntity addJobRequestAction( @RequestParam("vacancyId") long   vacancyId,
+                                               @RequestParam("comment")   String comment) {
+               
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String login = auth.getName();
+        
+        if (login != null) {
+            UserAbstract user = userService.findUserByLogin(login);
+            
+            // Check if user create request early and this is second
+            List<JobRequest> jobRequests = jobRequestService.getUserJobRequests(user.getId());
+            for(JobRequest request: jobRequests){
+                if (request.getVacancyId() == vacancyId) {
+                    return new ResponseEntity("You can create another job request for this vacancy!", HttpStatus.NOT_FOUND);
+                }
+            }
+            
+            Vacancy vacancy = vacancyService.findVacancyById(vacancyId);
+            if (vacancy.getUserId() == user.getId()) {
+                return new ResponseEntity("You can create Job Request for own vacancy!", HttpStatus.NOT_FOUND);
+            }
+            
+            JobRequest request = new JobRequest();
+            request.setUserId(user.getId());
+            request.setVacancyId(vacancyId);
+            request.setComment(comment);
+            request.setStatus(false);
+            
+            jobRequestService.addJobRequest(request);
+            return new ResponseEntity("", HttpStatus.OK);
+        }
+        
+        return new ResponseEntity("Problem with authentification", HttpStatus.NOT_FOUND);
+    }
+    
+    
+    
     
     
     @RequestMapping(value = "/vacancy/{id}", method = RequestMethod.GET)
@@ -118,8 +163,14 @@ public class VacancyController {
             modelAndView.addObject("vacancy", vacancy);
             
             UserAbstract vacancy_user = userService.findUserById(vacancy.getUserId());
-            
             modelAndView.addObject("vacancy_user", vacancy_user);
+            
+            List<JobRequest> jobRequestList = jobRequestService.getVacancysJobRequests(vacancyId);
+            if(jobRequestList != null) {
+                modelAndView.addObject("jobRequestList", jobRequestList);
+            }
+            
+            
             
         }
         

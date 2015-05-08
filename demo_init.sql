@@ -55,7 +55,7 @@ INSERT INTO `vacancys` (`ID` , `USER_ID` , `PAYMENT` , `TITLE` , `DESCRIPTION`, 
 (3, 3, NULL, 'Need professional killer', 'Need to kill one person. I will pay really big money for that!' , '2015-04-26 02:33:37', 0);
 
 INSERT INTO `job_requests` ( `ID` , `VACANCY_ID` , `USER_ID` , `COMMENT` , `DATE_ADDED` , `REQUEST_STATUS` ) VALUES 
-(1, 1, 3, 'Jessy! Why are you doing that?! I am best partner to you! And I did not kill your girlfriend! Trust me!!!', '2015-04-05 21:00:09', 0);
+(1, 1, 3, 'Jessy! Why are you doing that?! I am best partner for you! And I did not kill your girlfriend! Trust me!!!', '2015-04-05 21:00:09', 0);
 
 INSERT INTO `user_roles` (`USER_ROLE_ID`, `USER_ID`, `ROLE` ) VALUES 
 (1 , 1, 'ROLE_ADMIN'),

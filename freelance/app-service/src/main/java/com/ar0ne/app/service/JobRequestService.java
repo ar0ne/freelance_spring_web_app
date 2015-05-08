@@ -15,4 +15,8 @@ public interface JobRequestService {
 
     public JobRequest findJobRequestById(long id);
     
+    public List<JobRequest> getVacancysJobRequests(long vacancyId);
+    
+    public List<JobRequest> getUserJobRequests(long userId);
+    
 }

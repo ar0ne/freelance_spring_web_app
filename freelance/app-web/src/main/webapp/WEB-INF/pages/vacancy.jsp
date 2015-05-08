@@ -5,6 +5,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="_csrf" content="${_csrf.token}"/>
+        <meta name="_csrf_header" content="${_csrf.headerName}"/>
         <title>Vacancy Page</title>
     </head>
     <body>
@@ -12,6 +14,8 @@
 		<h2>Welcome : <c:out value="${pageContext.request.userPrincipal.name}" /> 
                  | <a href='<spring:url value="/logout" ></spring:url>'> Logout</a> </h2>  
 	</c:if>
+        
+        <a href='<spring:url value="/findJob" ></spring:url>'>All vacancys</a> <br/>
         
         <div id="vacancy_info" >
             <table>
@@ -34,6 +38,51 @@
                 </tbody>
             </table>
         </div>
+                    
+        
+        <h3 id="error" style="color: red"></h3>             
+        
+        <c:if test="${not empty jobRequestList }">
+            
+            <p> Job Request from users </p>
+
+            <div id="jobRequest_table">
+                <table>
+                    <c:forEach items="${jobRequestList}" var="jobRequest">
+                        <tr>
+                            <td>${jobRequest.dateAdded}</td>
+                            <td>${jobRequest.comment}</td>
+                            <td>${jobRequest.status}</td>
+                            <td style="display: none" class="jobRequest_id">${jobRequest.id}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+
+        </c:if>
+            
+        <br/>
+        
+        <a href='#' id="add_request__button">Add Request</a><br/>
+        
+        <div id="add_request__form" style="display: none">
+            <table>
+                <tr>
+                    <td>
+                        <label for="Comment">Enter your message:</label>
+                    </td>
+                    <td>
+                        <input id="add_request_comment__input" type="text" name="Comment"/><br/>
+                    </td>
+                </tr>
+                <input type="hidden" name="vacancyId" value="${vacancy.id}"/>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
+            </table>
+            <a href="<spring:url value="/addJobRequest" ></spring:url>" id="add_request__submit">Submit</a><br/>
+        </div>
+            
+        <script src="<c:url value='/resources/js/jquery.min.js'/>" ></script>
+        <script src="<c:url value='/resources/js/vacancy.js'/>" ></script>
         
     </body>
 </html>
