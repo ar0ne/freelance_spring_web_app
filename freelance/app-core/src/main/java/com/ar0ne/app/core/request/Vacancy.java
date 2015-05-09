@@ -1,5 +1,6 @@
 package com.ar0ne.app.core.request;
 
+import java.util.List;
 import org.joda.time.LocalDateTime;
 
 
@@ -14,18 +15,33 @@ public class Vacancy {
     private LocalDateTime   dateAdded;
     private boolean         status;
     
+    private List<JobRequest> jobRequests;
+    
     public Vacancy() {
     }
 
     public Vacancy(long id, long userId, String userLogin, String payment, String title, String description, LocalDateTime dateAdded, boolean status) {
-        this.id = id;
-        this.userId = userId;
-        this.payment = payment;
-        this.title = title;
-        this.description = description;
-        this.dateAdded = dateAdded;
-        this.status = status;
-        this.userLogin = userLogin;
+        this.id =           id;
+        this.userId =       userId;
+        this.payment =      payment;
+        this.title =        title;
+        this.description =  description;
+        this.dateAdded =    dateAdded;
+        this.status =       status;
+        this.userLogin =    userLogin;
+    }
+    
+    public Vacancy(long id, long userId, String userLogin, String payment, String title,
+                   String description, LocalDateTime dateAdded, boolean status, List<JobRequest> jobRequests) {
+        this.id =           id;
+        this.userId =       userId;
+        this.payment =      payment;
+        this.title =        title;
+        this.description =  description;
+        this.dateAdded =    dateAdded;
+        this.status =       status;
+        this.userLogin =    userLogin;
+        this.jobRequests =  jobRequests;
     }
 
 
@@ -91,6 +107,14 @@ public class Vacancy {
     
     public String getUserLogin() {
         return userLogin;
+    }
+    
+    public void setJobRequests(List<JobRequest> jobs) {
+        this.jobRequests = jobs;
+    }
+    
+    public List<JobRequest> getJobRequests() {
+        return jobRequests;
     }
 
     @Override

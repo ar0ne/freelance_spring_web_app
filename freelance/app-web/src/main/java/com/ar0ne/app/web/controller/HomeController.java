@@ -1,5 +1,6 @@
 package com.ar0ne.app.web.controller;
 
+import com.ar0ne.app.core.request.Vacancy;
 import com.ar0ne.app.core.user.Admin;
 import com.ar0ne.app.core.user.Client;
 import com.ar0ne.app.core.user.UserAbstract;
@@ -7,6 +8,8 @@ import com.ar0ne.app.service.UserService;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -109,8 +112,9 @@ public class HomeController {
             
             if (user instanceof Client) {
                 Client client = (Client)user;
-                modelAndView.addObject("vacancyList", client.getVacancys());
-                modelAndView.addObject("jobRequestList", client.getJobs());
+                modelAndView.addObject("myVacancyList", client.getVacancys());
+                modelAndView.addObject("myJobRequestList", client.getJobs());
+                
             }
             
             modelAndView.addObject("userId", userId);
@@ -173,17 +177,17 @@ public class HomeController {
     }
     
     @RequestMapping(value = "/adminProfile/submitUpdateAdminProfile", method = RequestMethod.POST)
-    public String updateAdminProfileAction(@RequestParam("name") String userName,
-            @RequestParam("login") String userLogin,
-            @RequestParam("password") String userPassword,
-            @RequestParam("id") Integer userId) {
+    public String updateAdminProfileAction( @RequestParam("name")        String userName,
+                                            @RequestParam("login")      String userLogin,
+                                            @RequestParam("password")   String userPassword,
+                                            @RequestParam("id")         Integer userId,
+                                            @RequestParam("about")      String   userAbout) {
 
-        userService.updateUser(new Admin(userId, userName, userLogin, userPassword, true));
+        userService.updateUser(new Admin(userId, userName, userLogin, userPassword, true, userAbout));
 
         return "redirect:/adminProfile/" + userId;
     }
-    
-    
+               
     
     
 }

@@ -1,5 +1,6 @@
 package com.ar0ne.app.dao;
 
+import com.ar0ne.app.core.request.JobRequest;
 import com.ar0ne.app.core.request.Vacancy;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,6 +40,12 @@ public class VacancyDaoImpl implements VacancyDao {
             vacancy.setDateAdded    (new LocalDateTime(rs.getTimestamp("DATE_ADDED")));
             vacancy.setStatus       (rs.getBoolean("VACANCY_STATUS"));
             vacancy.setUserLogin    (rs.getString("LOGIN"));
+            
+            JobRequestDaoImpl jobRequestDao = new JobRequestDaoImpl();
+            jobRequestDao.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+            List<JobRequest> jobRequests = jobRequestDao.getVacancysJobRequests(rs.getLong("ID"));
+            vacancy.setJobRequests(jobRequests);
+            
             return vacancy;
         }
     }
@@ -106,6 +113,18 @@ public class VacancyDaoImpl implements VacancyDao {
         return namedParameterJdbcTemplate.query(sql, new VacancyMapper());
     }
     
+    @Override
+    public void acceptRequest(long vacancyId, long requestId) {
+        
+        String sql1 = "UPDATE vacancys SET VACANCY_STATUS = 1 WHERE ID = :id";
+        String sql2 = "UPDATE job_requests SET REQUEST_STATUS = 1 WHERE ID = :id";
+        
+        Map<String, Object> parameters = new HashMap(2);
+        parameters.put("id", true);
+        
+        namedParameterJdbcTemplate.update(sql1, parameters);
+        namedParameterJdbcTemplate.update(sql2, parameters);
+    }
     
 
     

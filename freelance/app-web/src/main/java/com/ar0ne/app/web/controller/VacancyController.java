@@ -2,6 +2,7 @@ package com.ar0ne.app.web.controller;
 
 import com.ar0ne.app.core.request.JobRequest;
 import com.ar0ne.app.core.request.Vacancy;
+import com.ar0ne.app.core.user.Client;
 import com.ar0ne.app.core.user.UserAbstract;
 import com.ar0ne.app.service.JobRequestService;
 import com.ar0ne.app.service.UserService;
@@ -170,13 +171,36 @@ public class VacancyController {
             List<JobRequest> jobRequestList = jobRequestService.getVacancysJobRequests(vacancyId);
             modelAndView.addObject("jobRequestList", jobRequestList);
 
-            
-            
+        }
+        return modelAndView;
+    }
+    
+    
+    @RequestMapping(value = "/acceptRequest", method = RequestMethod.POST)
+    public ResponseEntity addJobRequestAction( @RequestParam("vacancyId")   long    vacancyId,
+                                               @RequestParam("requestId")   long    requestId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String login = auth.getName();
+
+        if (login != null) {
+            UserAbstract user = userService.findUserByLogin(login);
+         
+            if(user != null) {
+                
+                if(user instanceof Client) {
+                    Client client = (Client)user;
+                    List<Vacancy> vacancys = client.getVacancys();
+                    for(Vacancy vacancy : vacancys) {
+                        if(vacancy.getId() == vacancyId) {
+                            vacancyService.acceptRequest(vacancyId, requestId);
+                            return new ResponseEntity("", HttpStatus.OK);
+                        }
+                    }
+                }
+            }
         }
         
-        
-        
-        return modelAndView;
+        return new ResponseEntity("Problem with authentification", HttpStatus.NOT_FOUND);
     }
     
 }

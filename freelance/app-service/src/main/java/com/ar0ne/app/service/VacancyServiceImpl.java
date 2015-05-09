@@ -70,7 +70,7 @@ public class VacancyServiceImpl implements VacancyService {
     
     @Override
     public List<Vacancy> getAllUserVacancys(long userId) {
-        Assert.notNull(userId);
+        Assert.notNull(userId, "User ID Can't be NULL");
 
         return vacancyDao.getAllUserVacancys(userId);
     }
@@ -78,6 +78,14 @@ public class VacancyServiceImpl implements VacancyService {
     @Override
     public List<Vacancy> getOpenVacancy() {
         return vacancyDao.getOpenVacancy();
+    }
+    
+    @Override
+    public void acceptRequest(long vacancyId, long requestId) {
+        Assert.notNull(vacancyId, "Vacany Id Can't be NULL");
+        Assert.notNull(requestId, "Request Id Can't be NULL");
+        
+        vacancyDao.acceptRequest(vacancyId, requestId);
     }
     
 }

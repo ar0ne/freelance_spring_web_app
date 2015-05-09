@@ -50,7 +50,7 @@ INSERT INTO `users` (`USER_ID`, `LOGIN`, `PASSWORD`, `NAME`, `ABOUT` , `ENABLED`
 
 
 INSERT INTO `vacancys` (`ID` , `USER_ID` , `PAYMENT` , `TITLE` , `DESCRIPTION`, `DATE_ADDED` , `VACANCY_STATUS` ) VALUES
-(1, 2, '$$$', 'Find new partner', 'I hate my old boss. If someone find a new illegal job. Give me a sign!' , '2015-04-05 11:33:03', 0),
+(1, 2, '$$$', 'Find new partner', 'I hate my old boss. If someone wanna new illegal job. Give me a sign!' , '2015-04-05 11:33:03', 0),
 (2, 3, '$10 000', 'Need someone who know big markets', 'We small company what try to get new partners in global markets. Blablabla Blablabla Blablabla Need more text!! Blablabla Blablabla Blablabla' , '2015-04-06 12:00:01', 1),
 (3, 3, NULL, 'Need professional killer', 'Need to kill one person. I will pay really big money for that!' , '2015-04-26 02:33:37', 0);
 

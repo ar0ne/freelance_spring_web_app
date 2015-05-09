@@ -18,5 +18,7 @@ public interface VacancyDao {
     public List<Vacancy> getOpenVacancy();
 
     public Vacancy findVacancyById(long vacancyId);
+    
+    public void acceptRequest(long vacancyId, long requestId);
 
 }

@@ -13,6 +13,6 @@ public interface VacancyService {
     public Vacancy findVacancyById(long vacancyId);
     public List<Vacancy> getAllUserVacancys(long userId);
     public List<Vacancy> getOpenVacancy();
-    
+    public void acceptRequest(long vacancyId, long requestId);
     
 }
