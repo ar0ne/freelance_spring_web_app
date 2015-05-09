@@ -15,6 +15,8 @@ public class Client extends UserAbstract{
     private String              password;
     private boolean             enabled;
     
+    private String              about;
+    
     private List<Vacancy>       vacancys;
     private List<JobRequest>    jobs;
     
@@ -27,18 +29,28 @@ public class Client extends UserAbstract{
         this.password = password;
         this.enabled =  enabled;
     }
-
+    
     public Client(long id, String name, String login, String password, boolean enabled) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.enabled = enabled;
+    }
+
+    public Client(long id, String name, String login, String password, boolean enabled, String about) {
         this.id =       id;
         this.name =     name;
         this.login =    login;
         this.password = password;
         this.enabled =  enabled;
+        this.about =    about;
     }
     
     public Client(long id, String name, String login, String password, boolean enabled,
                 List<Vacancy> vacancys,  
-                List<JobRequest> jobs) {
+                List<JobRequest> jobs, 
+                String about) {
         this.id =       id;
         this.name =     name;
         this.login =    login;
@@ -46,6 +58,7 @@ public class Client extends UserAbstract{
         this.vacancys = vacancys;
         this.jobs =     jobs;
         this.enabled =  enabled;
+        this.about =    about;
     }
 
     @Override
@@ -123,6 +136,16 @@ public class Client extends UserAbstract{
     }
     
     @Override
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    @Override
+    public String getAbout() {
+        return about;
+    }
+    
+    @Override
     public String toString() {
         return "Client["
                 + " id: "        + this.id 
@@ -132,7 +155,5 @@ public class Client extends UserAbstract{
                 + ", enabled: "  + this.enabled
                 + " ]";
     }
-    
-    
-    
+
 }

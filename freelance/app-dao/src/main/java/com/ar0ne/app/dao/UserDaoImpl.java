@@ -91,7 +91,8 @@ public class UserDaoImpl implements UserDao {
                             rs.getString("NAME"),
                             rs.getString("LOGIN"),
                             rs.getString("PASSWORD"),
-                            rs.getBoolean("ENABLED")
+                            rs.getBoolean("ENABLED"),
+                            rs.getString("ABOUT")
                     );
                 }else {
                     
@@ -110,7 +111,8 @@ public class UserDaoImpl implements UserDao {
                             rs.getString("PASSWORD"),
                             rs.getBoolean("ENABLED"),
                             vacancys,
-                            jobRequests
+                            jobRequests,
+                            rs.getString("ABOUT")
                     );
                     
                 }
@@ -150,7 +152,8 @@ public class UserDaoImpl implements UserDao {
                             rs.getString("NAME"),
                             rs.getString("LOGIN"),
                             rs.getString("PASSWORD"),
-                            rs.getBoolean("ENABLED")
+                            rs.getBoolean("ENABLED"),
+                            rs.getString("ABOUT")
                     );
                 } else {
                     
@@ -169,7 +172,8 @@ public class UserDaoImpl implements UserDao {
                             rs.getString("PASSWORD"),
                             rs.getBoolean("ENABLED"),
                             vacancys,
-                            jobRequests
+                            jobRequests,
+                            rs.getString("ABOUT")
                     );
                 }
             }
@@ -219,7 +223,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(UserAbstract user) {
-        String sql = "UPDATE users SET LOGIN = ?, NAME = ?, PASSWORD = ?, ENABLED = ? WHERE USER_ID = ?";
+        String sql = "UPDATE users SET LOGIN = ?, NAME = ?, PASSWORD = ?, ENABLED = ?, ABOUT = ? WHERE USER_ID = ?";
 
         Connection conn = null;
 
@@ -231,7 +235,9 @@ public class UserDaoImpl implements UserDao {
             ps.setString(2, user.getName());
             ps.setString(3, user.getPassword());
             ps.setBoolean(4, user.isEnabled());
-            ps.setLong  (5, user.getId());
+            ps.setString(5, user.getAbout());
+            ps.setLong  (6, user.getId());
+            
             ps.executeUpdate();
             
             ps.close();

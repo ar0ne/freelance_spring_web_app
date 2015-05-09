@@ -12,6 +12,8 @@ public class Admin extends UserAbstract {
     private String      password;
     private boolean     enabled;
     
+    private String      about;
+    
     public Admin() {
     }
     
@@ -28,6 +30,15 @@ public class Admin extends UserAbstract {
         this.login =    login;
         this.password = password;
         this.enabled =  enabled;
+    }
+    
+    public Admin(long id, String name, String login, String password, boolean enabled, String about) {
+        this.id =       id;
+        this.name =     name;
+        this.login =    login;
+        this.password = password;
+        this.enabled =  enabled;
+        this.about =    about;
     }
     
     @Override
@@ -78,6 +89,16 @@ public class Admin extends UserAbstract {
     @Override
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+    
+    @Override
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    @Override
+    public String getAbout() {
+        return about;
     }
     
     @Override

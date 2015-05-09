@@ -43,7 +43,7 @@ public class VacancyController {
         // limit all descriptions by 256 chars
         for(Vacancy vacancy : vacancyList) {
             String descr = vacancy.getDescription();
-            vacancy.setDescription(descr.length() > 256 ? descr.substring(0, 256) : descr);
+            vacancy.setDescription(descr.length() > 256 ? descr.substring(0, 256) + "..." : descr);
         }
         
         modelAndView.addObject("vacancyList", vacancyList);

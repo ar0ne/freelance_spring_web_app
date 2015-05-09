@@ -32,6 +32,9 @@
                     <tr>
                         <td>Password</td><td>${user.password}</td>
                     </tr>
+                    <tr>
+                        <td>About</td><td>${user.about}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -68,6 +71,14 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>
+                                <label for="about">About</label>
+                            </td>
+                            <td>
+                                <input type="text" name="about" value="${user.about}"/><br/>
+                            </td>
+                        </tr>
+                        <tr>
                             <input type="hidden" name="id" value="${user.id}"/><br/>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </tr>
@@ -89,6 +100,7 @@
                     <table>
                     <c:forEach items="${vacancyList}" var="vacancy">
                         <tr>
+                            <td><a href='<spring:url value="/vacancy/${vacancy.id}" ></spring:url>'>Go to</a></td>
                             <td>${vacancy.title}</td>
                             <td>${vacancy.status}</td>
                             <td><a class="delete_vacancy__button" href='<spring:url value="/deleteVacancy" ></spring:url>'>Delete</a></td>

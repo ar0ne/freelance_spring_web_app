@@ -11,6 +11,8 @@ public abstract class UserAbstract {
     private String  login;
     private String  password;
     private boolean enabled;
+    
+    private String  about;
 
     public abstract long getId();
     public abstract void setId(long id);
@@ -22,6 +24,9 @@ public abstract class UserAbstract {
     public abstract String getLogin();
     public abstract boolean isEnabled();
     public abstract void setEnabled(boolean enabled);
+    
+    public abstract void setAbout(String about);
+    public abstract String getAbout();
     
     public abstract String toString(); 
 }

@@ -164,9 +164,10 @@ public class HomeController {
     public String updateUserProfileAction(  @RequestParam("name")      String   userName,
                                             @RequestParam("login")     String   userLogin,
                                             @RequestParam("password")  String   userPassword,
-                                            @RequestParam("id")        long     userId) {
+                                            @RequestParam("id")        long     userId,
+                                            @RequestParam("about")     String   userAbout) {
         
-        userService.updateUser(new Client(userId, userName, userLogin, userPassword, true));
+        userService.updateUser(new Client(userId, userName, userLogin, userPassword, true, userAbout));
         
         return "redirect:/userProfile/" + userId;
     }
