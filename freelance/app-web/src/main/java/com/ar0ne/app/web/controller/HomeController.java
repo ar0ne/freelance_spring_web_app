@@ -1,6 +1,5 @@
 package com.ar0ne.app.web.controller;
 
-import com.ar0ne.app.core.request.Vacancy;
 import com.ar0ne.app.core.user.Admin;
 import com.ar0ne.app.core.user.Client;
 import com.ar0ne.app.core.user.UserAbstract;
@@ -8,8 +7,6 @@ import com.ar0ne.app.service.UserService;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -38,10 +35,7 @@ public class HomeController {
         if(login != null) {
             UserAbstract user = userService.findUserByLogin(login);
             if (user != null) {
-                String home_url = "";
-                home_url += (user instanceof Client ? "/userProfile/" : "/adminProfile/");
-                home_url += user.getId();
-
+                String home_url = "/userProfile/" + user.getId();
                 view.addObject("user_home", home_url);
             }
         }
@@ -114,34 +108,16 @@ public class HomeController {
                 Client client = (Client)user;
                 modelAndView.addObject("myVacancyList", client.getVacancys());
                 modelAndView.addObject("myJobRequestList", client.getJobs());
+            } else if(user instanceof Admin) {
+                modelAndView.addObject("isAdmin", true);
                 
+                List<UserAbstract> userList = userService.getAllUsers();
+                modelAndView.addObject("userList", userList);
             }
             
             modelAndView.addObject("userId", userId);
         }
         
-        return modelAndView;
-    }
-    
-    
-    @RequestMapping(value = {"/adminProfile/{id}"}, method = RequestMethod.GET)
-    public ModelAndView adminProfilePage(@PathVariable("id") long userId) {
-        UserAbstract user = userService.findUserById(userId);
-
-        ModelAndView modelAndView = null;
-
-        if (user == null) {
-            modelAndView = new ModelAndView("redirect:/index");
-        } else {
-            modelAndView = new ModelAndView("adminProfile");
-            modelAndView.addObject("user", user);
-
-            modelAndView.addObject("userId", userId);
-
-            List<UserAbstract> userList = userService.getAllUsers();
-            modelAndView.addObject("userList", userList);
-        }
-
         return modelAndView;
     }
     
@@ -171,23 +147,20 @@ public class HomeController {
                                             @RequestParam("id")        long     userId,
                                             @RequestParam("about")     String   userAbout) {
         
-        userService.updateUser(new Client(userId, userName, userLogin, userPassword, true, userAbout));
-        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String login = auth.getName();
+
+        if (login != null) {
+            UserAbstract user = userService.findUserByLogin(login);
+            if (user != null) {
+                if(user instanceof Client) {
+                    userService.updateUser(new Client(userId, userName, userLogin, userPassword, true, userAbout));
+                } else if(user instanceof Admin) {
+                    userService.updateUser(new Admin (userId, userName, userLogin, userPassword, true, userAbout));
+                }
+            }
+        }
         return "redirect:/userProfile/" + userId;
     }
-    
-    @RequestMapping(value = "/adminProfile/submitUpdateAdminProfile", method = RequestMethod.POST)
-    public String updateAdminProfileAction( @RequestParam("name")        String userName,
-                                            @RequestParam("login")      String userLogin,
-                                            @RequestParam("password")   String userPassword,
-                                            @RequestParam("id")         Integer userId,
-                                            @RequestParam("about")      String   userAbout) {
-
-        userService.updateUser(new Admin(userId, userName, userLogin, userPassword, true, userAbout));
-
-        return "redirect:/adminProfile/" + userId;
-    }
-               
-    
     
 }
