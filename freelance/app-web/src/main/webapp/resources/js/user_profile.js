@@ -61,6 +61,31 @@
         
     });
     
+    $(".change_user_status__button").click(function (e) {
+        e.preventDefault();
+
+        var parent_tr = $(this).parent().parent();
+        var userId =    parent_tr.find("td.user_id").text();
+        var url =       $(this).attr("href");
+        var status =    parent_tr.find(".user_status");    
+
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: {
+                userId: userId
+            },
+            success: function (msg) {
+                console.log("Status changed!");
+                status.text(status.text() === "false" ? "true" : "false");
+            },
+            error: function (msg) {
+                console.log("Error: " + msg);
+            }
+        });
+
+    });
+    
 });   
 
 

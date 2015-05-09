@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 
 
 INSERT INTO `users` (`USER_ID`, `LOGIN`, `PASSWORD`, `NAME`, `ABOUT` , `ENABLED`) VALUES
-(1, 'ar1', '123', 'Serj', 'I am admin! I am GOD!', 1),
+(1, 'admin', '123', 'Serj', 'I am admin! I am GOD!', 1),
 (2, 'pinkman', 'pass', 'Jessi Jackson', 'Lets cook!', 1),
 (3, 'walter', 'pass', 'Walter W.', 'Jessy where is you?', 1),
 (4, 'jenny', 'pass', 'Jennifer', 'Ololo', 1);

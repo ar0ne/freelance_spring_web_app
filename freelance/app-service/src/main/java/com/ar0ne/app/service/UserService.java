@@ -15,5 +15,6 @@ public interface UserService {
     public List<UserAbstract> getAllUsers();
     public UserAbstract findUserById(long id);
     public UserAbstract findUserByLogin(String login);
+    public void changeUserStatus(long userId);
     
 }

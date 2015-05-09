@@ -89,5 +89,18 @@ public class UserServiceImpl implements UserService{
 
         return user;
     }
+    
+    @Override
+    public void changeUserStatus(long userId) {
+        Assert.notNull(userId, "User ID can't be NULL");
+        
+        UserAbstract user = null;
+        try {
+            user = userDao.findUserById(userId);
+            userDao.changeUserStatus(userId, !(user.isEnabled()) );
+        } catch (Exception ex) {
+            throw new IllegalArgumentException("User with this Id doesn't exist: " + userId);
+        }
+    }
 
 }

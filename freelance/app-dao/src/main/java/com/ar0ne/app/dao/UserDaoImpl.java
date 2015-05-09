@@ -306,11 +306,39 @@ public class UserDaoImpl implements UserDao {
                 } catch (SQLException e) {
                 }
             }
+        }       
+    }
+    
+    
+    @Override
+    public void changeUserStatus(long userId, boolean status) {
+        
+        String sql = "UPDATE users SET ENABLED = ? WHERE USER_ID = ?";
+        
+        Connection conn = null;
+
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setBoolean(1, status);
+            ps.setLong   (2, userId);
+
+            ps.executeUpdate();
+
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+
+                }
+            }
         }
-        
-        
-        
-        
     }
 
 }

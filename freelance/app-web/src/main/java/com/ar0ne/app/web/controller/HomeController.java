@@ -7,6 +7,8 @@ import com.ar0ne.app.service.UserService;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -161,6 +163,27 @@ public class HomeController {
             }
         }
         return "redirect:/userProfile/" + userId;
+    }
+    
+    
+    
+    @RequestMapping(value = "/userProfile/changeUserStatus", method = RequestMethod.POST)
+    public ResponseEntity changeUserStatusAction(@RequestParam("userId")    long userId ) {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String login = auth.getName();
+
+        if (login != null) {
+            UserAbstract user = userService.findUserByLogin(login);
+            if (user != null) {
+                if (user instanceof Admin) {
+                    userService.changeUserStatus(userId);
+                    return new ResponseEntity("", HttpStatus.OK);
+                }
+            }
+        }
+        
+        return new ResponseEntity("Error: problem with authentification", HttpStatus.NOT_FOUND);
     }
     
 }

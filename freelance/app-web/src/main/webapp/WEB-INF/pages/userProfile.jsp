@@ -113,9 +113,11 @@
                                         <td>${user.id}</td>
                                         <td>${user.login}</td>
                                         <td>${user.name}</td>
-                                        <td>${user.enabled}</td>
+                                        <td class="user_status">${user.enabled}</td>
                                         <td><a href='<spring:url value="/userProfile/${user.id}" ></spring:url>'>See profile</a></td>
-                                        </tr>
+                                        <td style="display: none" class="user_id">${user.id}</td>
+                                        <td><a href='<spring:url value="/userProfile/changeUserStatus" ></spring:url>' class="change_user_status__button">Change status</a></td>
+                                    </tr>
                                 </c:forEach>
                             </table>
                         </div>
