@@ -37,6 +37,7 @@ public class JobRequestDaoImpl implements JobRequestDao {
             jobRequest.setComment       (rs.getString("COMMENT"));
             jobRequest.setDateAdded     (new LocalDateTime(rs.getTimestamp("DATE_ADDED")));
             jobRequest.setStatus        (rs.getBoolean("REQUEST_STATUS"));
+            jobRequest.setUserLogin     (rs.getString("LOGIN"));
             return jobRequest;
         }
     }
@@ -58,7 +59,7 @@ public class JobRequestDaoImpl implements JobRequestDao {
 
     @Override
     public List<JobRequest> getAllJobRequests() {
-        String sql = "SELECT * FROM job_requests";
+        String sql = "SELECT job_requests.*, users.LOGIN FROM job_requests LEFT JOIN users ON users.USER_ID = job_requests.USER_ID";
         return namedParameterJdbcTemplate.query(sql, new JobRequestMapper());
     }
 
@@ -73,7 +74,7 @@ public class JobRequestDaoImpl implements JobRequestDao {
         parameters.put("dateAdded", new Timestamp(jobRequest.getDateAdded().toDateTime().getMillis()));
         parameters.put("status", jobRequest.getStatus());
 
-        String sql = "UPDATE job_requests SET VACANCY_ID = :vacancyId, USER_ID = :userId, COMMENT = :comment, DATE_ADDED = :dateAdded, REQUEST_STATUS = :status WHERE ID = :id";
+        String sql = "UPDATE job_requests SET VACANCY_ID = :vacancyId, USER_ID = :userId, COMMENT = :comment, DATE_ADDED = :dateAdded, REQUEST_STATUS = :status WHERE job_requests.ID = :id";
         namedParameterJdbcTemplate.update(sql, parameters);
     }
     
@@ -81,7 +82,7 @@ public class JobRequestDaoImpl implements JobRequestDao {
     public JobRequest findJobRequestById(long id) {
         Map<String, Object> parameters = new HashMap(1);
         parameters.put("id", id);
-        String sql = "SELECT * FROM job_requests WHERE ID = :id";
+        String sql = "SELECT job_requests.*, users.LOGIN FROM job_requests LEFT JOIN users ON users.USER_ID = job_requests.USER_ID WHERE job_requests.ID = :id";
         return namedParameterJdbcTemplate.queryForObject(sql, parameters, new JobRequestMapper());
     }
     
@@ -89,7 +90,7 @@ public class JobRequestDaoImpl implements JobRequestDao {
     public List<JobRequest> getVacancysJobRequests(long vacancyId) {
         Map<String, Object> parameters = new HashMap(1);
         parameters.put("vacancyId", vacancyId);
-        String sql = "SELECT * FROM job_requests WHERE VACANCY_ID = :vacancyId";
+        String sql = "SELECT job_requests.*, users.LOGIN FROM job_requests LEFT JOIN users ON users.USER_ID = job_requests.USER_ID WHERE job_requests.VACANCY_ID = :vacancyId";
         return namedParameterJdbcTemplate.query(sql, parameters, new JobRequestMapper());
     }
     
@@ -97,7 +98,7 @@ public class JobRequestDaoImpl implements JobRequestDao {
     public List<JobRequest> getUserJobRequests(long userId) {
         Map<String, Object> parameters = new HashMap(1);
         parameters.put("userId", userId);
-        String sql = "SELECT * FROM job_requests WHERE USER_ID = :userId";
+        String sql = "SELECT job_requests.*, users.LOGIN FROM job_requests LEFT JOIN users ON users.USER_ID = job_requests.USER_ID WHERE job_requests.USER_ID = :userId";
         return namedParameterJdbcTemplate.query(sql, parameters, new JobRequestMapper());
     }
     

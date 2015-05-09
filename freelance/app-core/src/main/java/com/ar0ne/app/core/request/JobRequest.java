@@ -8,6 +8,7 @@ public class JobRequest {
     private long id;
     private long vacancyId;
     private long userId;
+    private String userLogin;
     private String comment;
     private LocalDateTime dateAdded;
     private boolean status;
@@ -15,13 +16,14 @@ public class JobRequest {
     public JobRequest() {
     }
 
-    public JobRequest(long id, long vacancyId, long userId, String comment, LocalDateTime dateAdded, boolean status) {
-        this.id = id;
-        this.vacancyId = vacancyId;
-        this.userId = userId;
-        this.comment = comment;
-        this.dateAdded = dateAdded;
-        this.status = status;
+    public JobRequest(long id, long vacancyId, long userId, String userLogin, String comment, LocalDateTime dateAdded, boolean status) {
+        this.id =           id;
+        this.vacancyId =    vacancyId;
+        this.userId =       userId;
+        this.comment =      comment;
+        this.dateAdded =    dateAdded;
+        this.status =       status;
+        this.userLogin =    userLogin;
     }
 
     public String getComment() {
@@ -70,6 +72,14 @@ public class JobRequest {
 
     public void setVacancyId(long vacancyId) {
         this.vacancyId = vacancyId;
+    }
+    
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
     }
 
     @Override

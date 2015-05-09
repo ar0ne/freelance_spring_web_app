@@ -7,6 +7,7 @@ public class Vacancy {
     
     private long            id;
     private long            userId;
+    private String          userLogin;
     private String          payment;
     private String          title;
     private String          description;
@@ -16,7 +17,7 @@ public class Vacancy {
     public Vacancy() {
     }
 
-    public Vacancy(long id, long userId, String payment, String title, String description, LocalDateTime dateAdded, boolean status) {
+    public Vacancy(long id, long userId, String userLogin, String payment, String title, String description, LocalDateTime dateAdded, boolean status) {
         this.id = id;
         this.userId = userId;
         this.payment = payment;
@@ -24,6 +25,7 @@ public class Vacancy {
         this.description = description;
         this.dateAdded = dateAdded;
         this.status = status;
+        this.userLogin = userLogin;
     }
 
 
@@ -81,6 +83,14 @@ public class Vacancy {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+    
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+    
+    public String getUserLogin() {
+        return userLogin;
     }
 
     @Override

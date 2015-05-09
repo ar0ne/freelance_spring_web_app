@@ -1,13 +1,9 @@
 package com.ar0ne.app.web.controller;
 
-import com.ar0ne.app.core.request.JobRequest;
-import com.ar0ne.app.core.request.Vacancy;
 import com.ar0ne.app.core.user.Admin;
 import com.ar0ne.app.core.user.Client;
 import com.ar0ne.app.core.user.UserAbstract;
-import com.ar0ne.app.service.JobRequestService;
 import com.ar0ne.app.service.UserService;
-import com.ar0ne.app.service.VacancyService;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
     
     @Autowired
-    private UserService userService;
-    
-    @Autowired
-    private VacancyService vacancyService;
-    
-    @Autowired
-    private JobRequestService jobRequestService;
-      
+    private UserService userService;     
     
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
     public ModelAndView indexPage() {
@@ -115,17 +104,16 @@ public class HomeController {
             modelAndView = new ModelAndView("redirect:/userProfile");
         } else {
             modelAndView = new ModelAndView("userProfile");
+            
             modelAndView.addObject("user", user);
             
-            modelAndView.addObject("userId", userId);
-           
-            List<Vacancy> vacancyList = vacancyService.getAllUserVacancys(userId);
-            modelAndView.addObject("vacancyList", vacancyList);
-            
-            List<JobRequest> jobRequestList = jobRequestService.getUserJobRequests(userId);
-            if (jobRequestList != null) {
-                modelAndView.addObject("jobRequestList", jobRequestList);
+            if (user instanceof Client) {
+                Client client = (Client)user;
+                modelAndView.addObject("vacancyList", client.getVacancys());
+                modelAndView.addObject("jobRequestList", client.getJobs());
             }
+            
+            modelAndView.addObject("userId", userId);
         }
         
         return modelAndView;

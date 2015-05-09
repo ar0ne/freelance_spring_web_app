@@ -39,6 +39,13 @@ public class VacancyController {
         ModelAndView modelAndView = new ModelAndView("findJob");
         
         List<Vacancy> vacancyList = vacancyService.getOpenVacancy();
+        
+        // limit all descriptions by 256 chars
+        for(Vacancy vacancy : vacancyList) {
+            String descr = vacancy.getDescription();
+            vacancy.setDescription(descr.length() > 256 ? descr.substring(0, 256) : descr);
+        }
+        
         modelAndView.addObject("vacancyList", vacancyList);
         
         return modelAndView;
@@ -48,7 +55,6 @@ public class VacancyController {
     public ModelAndView addVacancyPage() {
         
         ModelAndView modelAndView = new ModelAndView("addVacancy");
-//        modelAndView.addObject("userId", userId);
         
         return modelAndView;
     }
@@ -93,11 +99,10 @@ public class VacancyController {
         String login = auth.getName();
         
         if (login != null) {
-            UserAbstract user = userService.findUserByLogin(login);
             Vacancy vacancy = vacancyService.findVacancyById(vacancyId);
-            if( user != null ) {
-                if (user.getId() == vacancy.getUserId()) {
-                    // only author of vacancy can delete (and admin)
+            if( vacancy != null ) {
+                if (login.equals(vacancy.getUserLogin())) {
+                    // only author of vacancy can delete 
                     vacancyService.deleteVacancy(vacancyId);
                     return new ResponseEntity("", HttpStatus.OK);
                 }
@@ -162,14 +167,9 @@ public class VacancyController {
             modelAndView = new ModelAndView("vacancy");
             modelAndView.addObject("vacancy", vacancy);
             
-            UserAbstract vacancy_user = userService.findUserById(vacancy.getUserId());
-            modelAndView.addObject("vacancy_user", vacancy_user);
-            
             List<JobRequest> jobRequestList = jobRequestService.getVacancysJobRequests(vacancyId);
-            if(jobRequestList != null) {
-                modelAndView.addObject("jobRequestList", jobRequestList);
-            }
-            
+            modelAndView.addObject("jobRequestList", jobRequestList);
+
             
             
         }

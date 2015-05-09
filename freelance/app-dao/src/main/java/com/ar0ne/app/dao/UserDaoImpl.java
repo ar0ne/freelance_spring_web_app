@@ -1,5 +1,7 @@
 package com.ar0ne.app.dao;
 
+import com.ar0ne.app.core.request.JobRequest;
+import com.ar0ne.app.core.request.Vacancy;
 import com.ar0ne.app.core.user.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -92,13 +94,25 @@ public class UserDaoImpl implements UserDao {
                             rs.getBoolean("ENABLED")
                     );
                 }else {
+                    
+                    VacancyDaoImpl vacancyDao = new VacancyDaoImpl();
+                    vacancyDao.setDataSource(dataSource);
+                    List<Vacancy> vacancys = vacancyDao.getAllUserVacancys(id);
+                    
+                    JobRequestDaoImpl jobRequestDao = new JobRequestDaoImpl();
+                    jobRequestDao.setDataSource(dataSource);
+                    List<JobRequest> jobRequests = jobRequestDao.getUserJobRequests(id);
+                    
                     user = new Client(
                             rs.getLong("USER_ID"),
                             rs.getString("NAME"),
                             rs.getString("LOGIN"),
                             rs.getString("PASSWORD"),
-                            rs.getBoolean("ENABLED")
+                            rs.getBoolean("ENABLED"),
+                            vacancys,
+                            jobRequests
                     );
+                    
                 }
             }
             rs.close();
@@ -139,12 +153,23 @@ public class UserDaoImpl implements UserDao {
                             rs.getBoolean("ENABLED")
                     );
                 } else {
+                    
+                    VacancyDaoImpl vacancyDao = new VacancyDaoImpl();
+                    vacancyDao.setDataSource(dataSource);
+                    List<Vacancy> vacancys = vacancyDao.getAllUserVacancys(rs.getLong("USER_ID"));
+
+                    JobRequestDaoImpl jobRequestDao = new JobRequestDaoImpl();
+                    jobRequestDao.setDataSource(dataSource);
+                    List<JobRequest> jobRequests = jobRequestDao.getUserJobRequests(rs.getLong("USER_ID"));
+                    
                     user = new Client(
                             rs.getLong("USER_ID"),
                             rs.getString("NAME"),
                             rs.getString("LOGIN"),
                             rs.getString("PASSWORD"),
-                            rs.getBoolean("ENABLED")
+                            rs.getBoolean("ENABLED"),
+                            vacancys,
+                            jobRequests
                     );
                 }
             }
@@ -167,6 +192,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void deleteUser(long id) {
         String sql = "DELETE u.*, r.* FROM users u LEFT JOIN user_roles r ON r.USER_ID = u.USER_ID WHERE u.USER_ID = ?";
+        
+        // @TODO: Delete his vacancys and requests??
 
         Connection conn = null;
 

@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService{
         try {
           user = userDao.findUserById(id);
         } catch(Exception ex) {
-            throw new IllegalArgumentException("User with this id doesn't exist");
+            throw new IllegalArgumentException("User with this id doesn't exist: " + id);
         }
         
         return user;
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService{
         try {
             user = userDao.findUserByLogin(login);
         } catch (Exception ex) {
-            throw new IllegalArgumentException("User with this LOGIN doesn't exist");
+            throw new IllegalArgumentException("User with this LOGIN doesn't exist: " + login);
         }
 
         return user;

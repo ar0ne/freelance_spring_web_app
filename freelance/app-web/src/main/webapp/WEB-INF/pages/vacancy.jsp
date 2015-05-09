@@ -13,6 +13,7 @@
         <c:if test="${pageContext.request.userPrincipal.name != null}">
 		<h2>Welcome : <c:out value="${pageContext.request.userPrincipal.name}" /> 
                  | <a href='<spring:url value="/logout" ></spring:url>'> Logout</a> </h2>  
+                 <a href='<spring:url value="/userProfile" ></spring:url>'>Your Profile</a>
 	</c:if>
         
         <a href='<spring:url value="/findJob" ></spring:url>'>All vacancys</a> <br/>
@@ -21,13 +22,13 @@
             <table>
                 <tbody>
                     <tr>
-                        <td>Title</td><td>${vacancy.title}</td>
+                        <td>Title: </td><td>${vacancy.title}</td>
                     </tr>
                     <tr>
-                        <td>Author: </td><td><a href='<spring:url value="/userProfile/${vacancy_user.id}" ></spring:url>'>${vacancy_user.login}</a></td>
+                        <td>Author: </td><td><a href='<spring:url value="/userProfile/${vacancy.userId}" ></spring:url>'>${vacancy.userLogin}</a></td>
                     </tr>
                     <tr>
-                        <td>Payment</td><td>${vacancy.payment}</td>
+                        <td>Payment: </td><td>${vacancy.payment}</td>
                     </tr>
                     <tr>
                         <td>Date: </td><td>${vacancy.dateAdded}</td>
@@ -50,6 +51,7 @@
                 <table>
                     <c:forEach items="${jobRequestList}" var="jobRequest">
                         <tr>
+                            <td>Author: <a href='<spring:url value="/userProfile/${jobRequest.userId}" ></spring:url>'>${jobRequest.userLogin}</a></td>
                             <td>${jobRequest.dateAdded}</td>
                             <td>${jobRequest.comment}</td>
                             <td>${jobRequest.status}</td>

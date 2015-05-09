@@ -28,7 +28,6 @@ public class VacancyDaoImpl implements VacancyDao {
     }
   
     public class VacancyMapper implements RowMapper<Vacancy> {
-        // (`ID` , `USER_ID` , `PAYMENT` , `TITLE` , `DESCRIPTION`, `DATE_ADDED` , `VACANCY_STATUS` ) 
         @Override
         public Vacancy mapRow(ResultSet rs, int i) throws SQLException {
             Vacancy vacancy = new Vacancy();
@@ -39,13 +38,14 @@ public class VacancyDaoImpl implements VacancyDao {
             vacancy.setDescription  (rs.getString("DESCRIPTION"));
             vacancy.setDateAdded    (new LocalDateTime(rs.getTimestamp("DATE_ADDED")));
             vacancy.setStatus       (rs.getBoolean("VACANCY_STATUS"));
+            vacancy.setUserLogin    (rs.getString("LOGIN"));
             return vacancy;
         }
     }
 
     @Override
     public List<Vacancy> getAllVacancys() {
-        String sql = "SELECT * FROM vacancys";
+        String sql = "SELECT vacancys.*, users.LOGIN FROM vacancys LEFT JOIN users ON vacancys.USER_ID = users.USER_ID";
         return namedParameterJdbcTemplate.query(sql, new VacancyMapper());
     }
     
@@ -53,7 +53,7 @@ public class VacancyDaoImpl implements VacancyDao {
     public Vacancy findVacancyById(long vacancyId) {
         Map<String, Object> parameters = new HashMap(1);
         parameters.put("id", vacancyId);
-        String sql = "SELECT * FROM vacancys WHERE ID = :id";
+        String sql = "SELECT vacancys.*, users.LOGIN FROM vacancys LEFT JOIN users ON vacancys.USER_ID = users.USER_ID WHERE vacancys.ID = :id";
         // String sql = "SELECT vacancys.*, users.LOGIN FROM vacancys LEFT JOIN users ON vacancys.USER_ID = users.USER_ID WHERE ID = :id";
         return namedParameterJdbcTemplate.queryForObject(sql, parameters, new VacancyMapper());
     }
@@ -63,14 +63,13 @@ public class VacancyDaoImpl implements VacancyDao {
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(vacancy);
         String sql = "INSERT INTO vacancys ( USER_ID , PAYMENT , TITLE , DESCRIPTION, DATE_ADDED , VACANCY_STATUS ) VALUES ( :userId, :payment, :title, :description, NOW(), :status)";
         namedParameterJdbcTemplate.update( sql, parameterSource, keyHolder);
-        //return keyHolder.getKey().longValue();
     }
     
     @Override
     public void deleteVacancy(Long vacancyId) {
         Map<String, Object> parameters = new HashMap(1);
         parameters.put("id", vacancyId);
-        String sql = "DELETE FROM vacancys  WHERE ID = :id";
+        String sql = "DELETE FROM vacancys WHERE ID = :id";
         namedParameterJdbcTemplate.update( sql , parameters);
     }
     
@@ -86,7 +85,7 @@ public class VacancyDaoImpl implements VacancyDao {
         parameters.put("dateAdded",     new Timestamp(vacancy.getDateAdded().toDateTime().getMillis()));
         parameters.put("vacancyStatus", vacancy.getStatus());
         
-        String sql = "UPDATE vacancys SET USER_ID = :userId, PAYMENT = :payment, TITLE = :title, DESCRIPTION = :description, DATE_ADDED = :dateAdded, VACANCY_STATUS = :vacancyStatus WHERE ID = :id";
+        String sql = "UPDATE vacancys SET USER_ID = :userId, PAYMENT = :payment, TITLE = :title, DESCRIPTION = :description, DATE_ADDED = :dateAdded, VACANCY_STATUS = :vacancyStatus WHERE vacancys.ID = :id";
         namedParameterJdbcTemplate.update( sql , parameters );
     }
     
@@ -96,14 +95,14 @@ public class VacancyDaoImpl implements VacancyDao {
         Map<String, Object> parameters = new HashMap(2);
         parameters.put("userId", userId);
         
-        //String sql = "SELECT users.NAME, vacancys.* FROM users LEFT JOIN vacancys ON vacancys.USER_ID = users.USER_ID WHERE vacancys.USER_ID = :userId";
-        String sql = "SELECT * FROM vacancys WHERE USER_ID = :userId";
+        String sql = "SELECT users.LOGIN, vacancys.* FROM users LEFT JOIN vacancys ON vacancys.USER_ID = users.USER_ID WHERE vacancys.USER_ID = :userId";
+        //String sql = "SELECT * FROM vacancys WHERE USER_ID = :userId";
         return namedParameterJdbcTemplate.query(sql, parameters, new VacancyMapper());
     }
     
     @Override
     public List<Vacancy> getOpenVacancy() {
-        String sql = "SELECT * FROM vacancys WHERE VACANCY_STATUS = 0";
+        String sql = "SELECT users.LOGIN, vacancys.* FROM vacancys LEFT JOIN users ON vacancys.USER_ID = users.USER_ID WHERE vacancys.VACANCY_STATUS = 0";
         return namedParameterJdbcTemplate.query(sql, new VacancyMapper());
     }
     
