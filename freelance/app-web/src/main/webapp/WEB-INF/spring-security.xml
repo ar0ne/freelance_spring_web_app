@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc.xsd
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/jdbc
+         http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+         http://www.springframework.org/schema/security
+         http://www.springframework.org/schema/security/spring-security.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd">
+
+    
+    <security:http auto-config="true" use-expressions="true">
+        <security:intercept-url pattern="/userProfile/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
+<!--        <security:intercept-url pattern="/login*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />-->
+        <security:form-login 
+            login-page="/login" 
+            default-target-url="/userProfile" 
+            authentication-failure-url="/login?error" 
+            username-parameter="username"
+            password-parameter="password" />
+        <security:intercept-url pattern="/signUp" access="permitAll" />
+        <security:intercept-url pattern="/findJob*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
+        <security:intercept-url pattern="/vacancy/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
+        <security:logout logout-success-url="/index" invalidate-session="true" delete-cookies="JSESSIONID" />
+        <security:csrf/> 
+    </security:http>
+    
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:jdbc-user-service
+                data-source-ref="dataSource"
+                users-by-username-query="SELECT LOGIN, PASSWORD, ENABLED FROM users WHERE LOGIN = ?"
+                authorities-by-username-query="SELECT u1.LOGIN, u2.ROLE FROM users u1, user_roles u2 WHERE u1.USER_ID = u2.USER_ID and u1.LOGIN = ?" />
+        </security:authentication-provider>
+    </security:authentication-manager>
+    
+</beans>

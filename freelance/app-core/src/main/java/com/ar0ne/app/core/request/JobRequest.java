@@ -5,18 +5,20 @@ import org.joda.time.LocalDateTime;
 
 public class JobRequest {
     
-    private long id;
-    private long vacancyId;
-    private long userId;
-    private String userLogin;
-    private String comment;
-    private LocalDateTime dateAdded;
-    private boolean status;
+    private long            id;
+    private long            vacancyId;
+    private long            userId;
+    private String          userLogin;
+    private String          comment;
+    private LocalDateTime   dateAdded;
+    private boolean         status;
 
     public JobRequest() {
     }
 
-    public JobRequest(long id, long vacancyId, long userId, String userLogin, String comment, LocalDateTime dateAdded, boolean status) {
+    public JobRequest(long id, long vacancyId, long userId, String userLogin, 
+                      String comment, LocalDateTime dateAdded, boolean status) {
+        
         this.id =           id;
         this.vacancyId =    vacancyId;
         this.userId =       userId;

@@ -61,14 +61,13 @@ public class VacancyDaoImpl implements VacancyDao {
         Map<String, Object> parameters = new HashMap(1);
         parameters.put("id", vacancyId);
         String sql = "SELECT vacancys.*, users.LOGIN FROM vacancys LEFT JOIN users ON vacancys.USER_ID = users.USER_ID WHERE vacancys.ID = :id";
-        // String sql = "SELECT vacancys.*, users.LOGIN FROM vacancys LEFT JOIN users ON vacancys.USER_ID = users.USER_ID WHERE ID = :id";
         return namedParameterJdbcTemplate.queryForObject(sql, parameters, new VacancyMapper());
     }
     
     @Override
     public void addVacancy(Vacancy vacancy) {
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(vacancy);
-        String sql = "INSERT INTO vacancys ( USER_ID , PAYMENT , TITLE , DESCRIPTION, DATE_ADDED , VACANCY_STATUS ) VALUES ( :userId, :payment, :title, :description, NOW(), :status)";
+        String sql = "INSERT INTO vacancys ( USER_ID, PAYMENT, TITLE, DESCRIPTION, DATE_ADDED, VACANCY_STATUS ) VALUES ( :userId, :payment, :title, :description, NOW(), :status)";
         namedParameterJdbcTemplate.update( sql, parameterSource, keyHolder);
     }
     
@@ -103,7 +102,6 @@ public class VacancyDaoImpl implements VacancyDao {
         parameters.put("userId", userId);
         
         String sql = "SELECT users.LOGIN, vacancys.* FROM users LEFT JOIN vacancys ON vacancys.USER_ID = users.USER_ID WHERE vacancys.USER_ID = :userId";
-        //String sql = "SELECT * FROM vacancys WHERE USER_ID = :userId";
         return namedParameterJdbcTemplate.query(sql, parameters, new VacancyMapper());
     }
     
@@ -116,7 +114,7 @@ public class VacancyDaoImpl implements VacancyDao {
     @Override
     public void acceptRequest(long vacancyId, long requestId) {
         
-        String sql1 = "UPDATE vacancys SET VACANCY_STATUS = 1 WHERE ID = :id";
+        String sql1 = "UPDATE vacancys     SET VACANCY_STATUS = 1 WHERE ID = :id";
         String sql2 = "UPDATE job_requests SET REQUEST_STATUS = 1 WHERE ID = :id";
         
         Map<String, Object> parameters = new HashMap(2);
@@ -125,8 +123,6 @@ public class VacancyDaoImpl implements VacancyDao {
         namedParameterJdbcTemplate.update(sql1, parameters);
         namedParameterJdbcTemplate.update(sql2, parameters);
     }
-    
-
     
     
 }
