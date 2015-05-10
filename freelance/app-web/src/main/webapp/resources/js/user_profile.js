@@ -2,7 +2,7 @@
 ;$(function () {
     $("#update_profile__button").click(function (e) {
         e.preventDefault();
-        $("#user_profile, #update_profile_form").toggle("slow");
+        $("#user_profile_form, #update_profile_form").toggle("slow");
     });
     
     var token = $("meta[name='_csrf']").attr("content");
@@ -16,6 +16,7 @@
         var parent_tr  = $(this).parent().parent();
         var id  = parent_tr.find("td.vacancy_id").text();
         var url = $(this).attr("href");
+        var parent_div = parent_tr.parent().parent().parent();
         
         $.ajax({
             method: "POST",
@@ -25,8 +26,7 @@
             },
             success: function(msg) {
                 console.log("Deleted!");
-                console.log();
-                parent_tr.remove();
+                parent_div.remove();
             },
             error: function(msg){
                 console.log("Error: " + msg);
@@ -40,7 +40,7 @@
         var parent_tr = $(this).parent().parent();
         var requestId = parent_tr.find("td.request_id").text();
         var url = $(this).attr("href");
-        var vacancyId = parent_tr.parent().parent().parent().find("tr").find("td.vacancy_id").text();
+        var vacancyId = parent_tr.find("td.vacancy_id").text();
         
         $.ajax({
             method: "POST",
@@ -51,11 +51,10 @@
             },
             success: function (msg) {
                 console.log("Accepted!");
-                console.log();
-                //parent_tr.remove();
+                
             },
             error: function (msg) {
-                console.log("Error: " + msg);
+                console.log("Error: " + msg.responseText);
             }
         });
         
@@ -80,7 +79,7 @@
                 status.text(status.text() === "false" ? "true" : "false");
             },
             error: function (msg) {
-                console.log("Error: " + msg);
+                console.log("Error: " + msg.responseText);
             }
         });
 

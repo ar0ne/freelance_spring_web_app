@@ -92,7 +92,7 @@ public class VacancyController {
     }
     
     
-    // REST for ajax 
+    // for ajax 
     @RequestMapping(value = "/deleteVacancy", method = RequestMethod.POST)
     public ResponseEntity deleteVacancyAction( @RequestParam("vacancyId") long vacancyId ) {
                

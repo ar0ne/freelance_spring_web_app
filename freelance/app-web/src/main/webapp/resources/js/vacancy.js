@@ -43,6 +43,8 @@
             error: function (msg) {
                 console.log("ERROR");
                 error.text(msg.responseText);
+                $("#add_request__form").toggle("slow");
+
             }
         });
     });

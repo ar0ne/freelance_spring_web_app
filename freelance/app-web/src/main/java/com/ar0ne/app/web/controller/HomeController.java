@@ -187,5 +187,5 @@ public class HomeController {
         
         return new ResponseEntity("Error: problem with authentification", HttpStatus.NOT_FOUND);
     }
-    
+        
 }
