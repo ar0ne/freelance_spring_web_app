@@ -76,11 +76,14 @@
                         <h2 class="vacancy-title">${vacancy.title}</h2>
 
                         <div class="vacancy-info row">
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <p><b>Payment: </b><c:if test="${not vacancy.payment}" >Not aviable</c:if></p>
                             </div>
                             <div class="col-md-5">
                                 <p><b>Posted: </b>${vacancy.dateAdded}</p>
+                            </div>
+                            <div class="col-md-2">
+                                <p><b>Author: </b><a href='<spring:url value="/userProfile/${vacancy.userId}" ></spring:url>'>${vacancy.userLogin}</a></p>
                             </div>
                         </div>
 
@@ -115,18 +118,18 @@
                         </div>
 
                         <br/>
-
-                        <c:if test="${not empty jobRequestList }">
                             
-                            <h3>Applicants</h3>
+                        <h3>Applicants</h3>
 
-                            <div id="jobRequest_table">
-                                <table class="table">
-                                    <tr>
-                                        <th>Freelancer</th>
-                                        <th>Comment</th>
-                                        <th>Date applied</th>
-                                    </tr>
+                        <div id="jobRequest_table">
+                            <table class="table">
+                                <tr>
+                                    <th>Freelancer</th>
+                                    <th>Comment</th>
+                                    <th>Date applied</th>
+                                </tr>
+
+                                <c:if test="${not empty jobRequestList }">
 
                                     <c:forEach items="${jobRequestList}" var="jobRequest">
                                         <tr>
@@ -136,10 +139,12 @@
                                             <td style="display: none" class="jobRequest_id">${jobRequest.id}</td>
                                         </tr>
                                     </c:forEach>
-                                </table>
-                            </div>
 
-                        </c:if>
+                                </c:if>
+                            </table>
+                        </div>
+
+                        
                             
                     </div>
                 </div>
@@ -147,10 +152,22 @@
                 <div class="col-md-4">
 
                     <div class="row" id="right_vacancy_column">
-
-                        <p><b>Author: </b><a href='<spring:url value="/userProfile/${vacancy.userId}" ></spring:url>'>${vacancy.userLogin}</a></p>
                         
-                        <a class="btn btn-success btn-block" href='#' id="add_request__button">Apply To This Job</a>
+                        <c:choose>
+
+                            <c:when test="${pageContext.request.userPrincipal.name == vacancy.userLogin}">
+                                <button class="btn btn-info btn-block">It's your vacancy</button>
+                            </c:when>
+
+                            <c:when test="${not vacancy.status}">
+                                <a class="btn btn-success btn-block" href='#' id="add_request__button">Apply To This Job</a>
+                            </c:when>
+
+                            <c:otherwise>
+                                <button class="btn btn-warning btn-block">Vacancy Closed</button>
+                            </c:otherwise>
+
+                        </c:choose>
                         
                         <br/>
 
@@ -160,6 +177,12 @@
 
             </div>
         </div>
+
+
+        <footer class="footer">
+            <p>Freelance Platform by <a href="http://github.com/ar0ne/">Serj Ar[]ne</a></p>
+            <p><small>2015</small></p>
+        </footer>
             
         <script src="<c:url value='/resources/js/jquery.min.js'/>" ></script>
         <script src="<c:url value='/resources/js/vacancy.js'/>" ></script>

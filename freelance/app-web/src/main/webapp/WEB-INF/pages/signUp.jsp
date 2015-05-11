@@ -63,22 +63,29 @@
             </nav>
         </div>  
 
-        <form class="form-signup" action="<c:url value='/submitDataSignUp' />" method="post">
-            <h2 class="form-signup-heading">Register new user</h2>
+        <div class="container" id="container" >
+            <form class="form-signup" action="<c:url value='/submitDataSignUp' />" method="post">
+                <h2 class="form-signup-heading">Register new user</h2>
 
-            <label for="Name" class="sr-only">Name</label>
-            <input type="text" name='Name' class="form-control" placeholder="Name" maxlength="100" minlength="2" required autofocus>
+                <label for="Name" class="sr-only">Name</label>
+                <input type="text" name='Name' class="form-control" placeholder="Name" maxlength="100" minlength="2" required autofocus>
 
-            <label for="Login" class="sr-only">Password</label>
-            <input type="text" name='Login' class="form-control" placeholder="Login" maxlength="25" minlength="3" required>
+                <label for="Login" class="sr-only">Password</label>
+                <input type="text" name='Login' class="form-control" placeholder="Login" maxlength="25" minlength="3" required>
 
-            <label for="Password" class="sr-only">Password</label>
-            <input type="password" name='Password' class="form-control" placeholder="Password" maxlength="100" minlength="3" required>
+                <label for="Password" class="sr-only">Password</label>
+                <input type="password" name='Password' class="form-control" placeholder="Password" maxlength="100" minlength="3" required>
 
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
 
-        </form>
+            </form>
+        </div>
+
+        <footer class="footer">
+            <p>Freelance Platform by <a href="http://github.com/ar0ne/">Serj Ar[]ne</a></p>
+            <p><small>2015</small></p>
+        </footer>
 
 
     </body>

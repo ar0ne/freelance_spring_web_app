@@ -65,14 +65,14 @@
         </div>  
 
 
-        <div class="container">
+        <div class="container" id="container">
 
             <form class="form-signin" name='loginForm' action="<c:url value='/login' />" method='POST'>
-                <h2 class="form-signin-heading">Please, sign in</h2>
-
+                <h2 class="form-signin-heading">Login and go to work</h2>
+                <br/>
                 <label for="username" class="sr-only">Login</label>
                 <input type="text" name='username' id="username" class="form-control" placeholder="Login" maxlength="100" minlength="3" required autofocus>
-
+                <br/>
                 <label for="password" class="sr-only">Password</label>
                 <input type="password" name='password' id="password" class="form-control" placeholder="Password" maxlength="100" minlength="3" required>
 
@@ -82,21 +82,25 @@
                     </label>
                 </div>
 
+                <c:if test="${not empty error}">
+                    <div class="error">${error}</div>
+                </c:if>
+                <c:if test="${not empty msg}">
+                    <div class="msg">${msg}</div>
+                </c:if>
+
                 <input type="hidden" name="${_csrf.parameterName}"
                        value="${_csrf.token}" />
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             </form>
 
-
-            <c:if test="${not empty error}">
-                <div class="error">${error}</div>
-            </c:if>
-            <c:if test="${not empty msg}">
-                <div class="msg">${msg}</div>
-            </c:if>
-
-
         </div> <!-- /container -->
+
+
+        <footer class="footer">
+            <p>Freelance Platform by <a href="http://github.com/ar0ne/">Serj Ar[]ne</a></p>
+            <p><small>2015</small></p>
+        </footer>
 
 
 

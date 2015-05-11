@@ -65,7 +65,7 @@
         </div>  
                 
 
-        <div id="container" class="container theme-showcase" role="main" >
+        <div id="container" class="container" role="main" >
 
             <div id="user_profile" >
 
@@ -171,8 +171,7 @@
                                         <th>ID</th>
                                         <th>Login</th>
                                         <th>Name</th>
-                                        
-                                        <th>URL</th>
+                                        <th>Page</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -182,7 +181,7 @@
                                             <td>${user.login}</td>
                                             <td>${user.name}</td>
                                             <td><a href='<spring:url value="/userProfile/${user.id}" ></spring:url>'>See profile</a></td>
-                                            <td class="user_status">${user.enabled}</td>
+                                            <td class="user-status"><button class="btn">${user.enabled}</button></td>
                                             <td style="display: none" class="user_id">${user.id}</td>
                                             <td><a href='<spring:url value="/userProfile/changeUserStatus" ></spring:url>' class="change_user_status__button">Change status</a></td>
                                         </tr>
@@ -195,16 +194,23 @@
 
                     <c:otherwise>
                         <br/>
-                        <div role="tabpanel">
 
-                            <ul class="nav nav-tabs" role="tablist">
-                                <c:if test="${not empty myVacancyList }">
-                                    <li role="presentation" class="active"><a href="#vacancy_table" aria-controls="vacancy_table" role="tab" data-toggle="tab">My Vacancys</a></li>
-                                </c:if>
-                                <c:if test="${not empty myJobRequestList }">
-                                  <li role="presentation"><a href="#jobRequest_table" aria-controls="profile" role="tab" data-toggle="tab">My Job Requests</a></li>
-                                </c:if>
-                            </ul>
+                        <c:if test="${not empty myVacancyList or not empty myJobRequestList }">
+
+                            <div role="tabpanel">
+
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <c:if test="${not empty myVacancyList }">
+                                        <li role="presentation" class="active"><a href="#vacancy_table" aria-controls="vacancy_table" role="tab" data-toggle="tab">My Vacancys</a></li>
+                                    </c:if>
+                                    <c:if test="${not empty myJobRequestList }">
+                                      <li role="presentation"><a href="#jobRequest_table" aria-controls="profile" role="tab" data-toggle="tab">My Job Requests</a></li>
+                                    </c:if>
+                                </ul>
+
+                            </div>
+
+                        </c:if>
 
 
                         <div class="tab-content">
@@ -213,71 +219,59 @@
 
                                 <div role="tabpanel" class="tab-pane active" id="vacancy_table">
 
-                                        <c:set var="count" value="0" scope="page" />
+                                    <c:set var="count" value="0" scope="page" />
 
-                                        <c:forEach items="${myVacancyList}" var="vacancy">
+                                    <c:forEach items="${myVacancyList}" var="vacancy">
 
-                                            <c:set var="count" value="${count + 1}" scope="page"/>
+                                        <c:set var="count" value="${count + 1}" scope="page"/>
 
-                                            <div id="vacancy_${count}">
+                                        <div id="vacancy_${count}" class="vacancy">
 
-                                                <table class="table table-bordered table-hover table-condensed" style="margin-bottom: 0">
-                                                    <tr>
-                                                        <th>Vacancy #</th>
-                                                        <th>Title</th>
-                                                        <th>Payment</th>
-                                                        <th>Date added</th>
-                                                        <th>URL</th>
-                                                        <th>Status</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>${count}</td>
-                                                        <td>${vacancy.title}</td>
-                                                        <td>${vacancy.payment}</td>
-                                                        <td>${vacancy.dateAdded}</td>
-                                                        <td><a href='<spring:url value="/vacancy/${vacancy.id}" ></spring:url>'>See</a></td>
-                                                        <td>${vacancy.status}</td>
-                                                        <td><a class="delete_vacancy__button" href='<spring:url value="/deleteVacancy" ></spring:url>'>Delete</a></td>
-                                                        <td style="display: none" class="vacancy_id">${vacancy.id}</td>
-                                                    </tr>
-                                                    <c:if test="${not empty vacancy.jobRequests }">
-                                                        </table>
-                                                    </c:if>
-                                                    <c:if test="${not empty vacancy.jobRequests }">
-                                                        <table class="table table-bordered">
-                                                            <c:forEach items="${vacancy.jobRequests}" var="request">
-                                                                <tr class="success">
-                                                                    <th>User</th>
-                                                                    <th>Comment</th>
-                                                                    <th>Date added</th>
-                                                                    <th>Status</th>
-                                                                    <c:if test="${not request.status}">
-                                                                        <th>Action</th>
-                                                                    </c:if>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><a href='<spring:url value="/userProfile/${request.userId}" ></spring:url>'>${request.userLogin}</a></td>
-                                                                    <td>${request.comment}</td>
-                                                                    <td>${request.dateAdded}</td>
-                                                                    <td>${request.status}</td>
-                                                                    <c:if test="${not request.status}">
-                                                                        <td style="display: none" class="request_id">${request.id}</td>
-                                                                        <td style="display: none" class="vacancy_id">${vacancy.id}</td>
-                                                                        <td><a href='<spring:url value="/acceptRequest" ></spring:url>' class="accept_job_request__button">Accept</a></td>
-                                                                    </c:if>
-                                                                </tr>
-                                                            </c:forEach>
-                                                        </table>
-                                                    </c:if>
-                                                    <c:if test="${empty vacancy.jobRequests }">
-                                                        </table>
-                                                    </c:if>
+                                            <div class="row">
+                                                <div class="col-md-7">
+                                                    <div class="row">
+                                                        <div class="col-md-2 vacancy-status">
+                                                            <button class="btn" id="vacancy_status__button${vacancy.id}">${vacancy.status}</button>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <a href='<spring:url value="/vacancy/${vacancy.id}" ></spring:url>' class="user-vacancy-title">${vacancy.title}</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p><b>payment: </b>${vacancy.payment}</p>
+                                                    <p><b>Date added: </b>${vacancy.dateAdded}</p>
+                                                    <div style="display: none" class="vacancy_id">${vacancy.id}</div>
+                                                    <a class="delete_vacancy__button btn btn-danger" href='<spring:url value="/deleteVacancy" ></spring:url>'>Delete</a>
+                                                </div>
                                             </div>
-                                            
-                                        </c:forEach>
-
-                                    </table>
+                                            <c:if test="${not empty vacancy.jobRequests }">
+                                                <h4>Applicants</h4>
+                                                <c:forEach items="${vacancy.jobRequests}" var="request">
+                                                    <div class="row table-applicants<c:if test='${request.status}'> bg-success</c:if>">
+                                                        <div class="col-md-1">
+                                                            <a href='<spring:url value="/userProfile/${request.userId}" ></spring:url>'><img src="<c:url value='/resources/images/avatar.png'/>" alt="${request.userLogin}" class="img-circle img-responsive small-user-avatar"></a>
+                                                            <p style="text-align: center;"><a href='<spring:url value="/userProfile/${request.userId}" ></spring:url>'>${request.userLogin}</a></p>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p>${request.comment}</p>
+                                                            <p>${request.dateAdded}</p>
+                                                        </div>
+                                                        <c:if test="${not request.status}">
+                                                            <div class="col-md-4">
+                                                                <span style="display: none" class="request_id">${request.id}</span>
+                                                                <span style="display: none" class="vacancy_id">${vacancy.id}</span>
+                                                                <c:if test="${not vacancy.status}" >
+                                                                    <a href='<spring:url value="/acceptRequest" ></spring:url>' class="accept_job_request__button btn btn-success">Accept</a>
+                                                                </c:if>
+                                                            </div>
+                                                        </c:if>
+                                                    </div>
+                                                    
+                                                </c:forEach>
+                                            </c:if>
+                                        </div>
+                                    </c:forEach>
                                 </div>
 
                             </c:if>
@@ -286,18 +280,16 @@
 
                                 <div role="tabpanel" class="tab-pane" id="jobRequest_table">
                                     <table class="table table-bordered table-hover table-condensed">
+                                        <tr>
+                                            <th>Comment</th>
+                                            <th>Date added</th>
+                                            <th>Status</th>
+                                        </tr>
                                         <c:forEach items="${myJobRequestList}" var="jobRequest">
                                             <tr>
-                                                <th>Comment</th>
-                                                <th>Date added</th>
-                                                <th>URL</th>
-                                                <th>Status</th>
-                                            </tr>
-                                            <tr>
-                                                <td>${jobRequest.comment}</td>
+                                                <td><a href='<spring:url value="/vacancy/${jobRequest.vacancyId}" ></spring:url>'>${jobRequest.comment}</a></td>
                                                 <td>${jobRequest.dateAdded}</td>
-                                                <td><a href='<spring:url value="/vacancy/${jobRequest.vacancyId}" ></spring:url>'>See</a></td>
-                                                <td>${jobRequest.status}</td>
+                                                <td class="job-request-status"><button class="btn">${jobRequest.status}</button></td>
                                                 <td style="display: none" class="jobRequest_id">${jobRequest.id}</td>
                                             </tr>
                                         </c:forEach>
@@ -316,6 +308,12 @@
             </c:if>
 
         </div>
+    </div>
+
+        <footer class="footer">
+            <p>Freelance Platform by <a href="http://github.com/ar0ne/">Serj Ar[]ne</a></p>
+            <p><small>2015</small></p>
+        </footer>
             
         <script src="<c:url value='/resources/js/jquery.min.js'/>" ></script>
         <script src="<c:url value='/resources/js/bootstrap.min.js'/>" ></script>

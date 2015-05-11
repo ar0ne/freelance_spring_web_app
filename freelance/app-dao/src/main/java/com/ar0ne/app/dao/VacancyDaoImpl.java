@@ -118,9 +118,11 @@ public class VacancyDaoImpl implements VacancyDao {
         String sql2 = "UPDATE job_requests SET REQUEST_STATUS = 1 WHERE ID = :id";
         
         Map<String, Object> parameters = new HashMap(2);
-        parameters.put("id", true);
+        parameters.put("id", vacancyId);
         
         namedParameterJdbcTemplate.update(sql1, parameters);
+
+        parameters.put("id", requestId);
         namedParameterJdbcTemplate.update(sql2, parameters);
     }
     

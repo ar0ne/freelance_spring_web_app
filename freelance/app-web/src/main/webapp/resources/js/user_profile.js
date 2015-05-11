@@ -13,10 +13,9 @@
     
     $(".delete_vacancy__button").click(function(e) {
         e.preventDefault();
-        var parent_tr  = $(this).parent().parent();
-        var id  = parent_tr.find("td.vacancy_id").text();
+        var id  = $(this).parent().find(".vacancy_id").text();
         var url = $(this).attr("href");
-        var parent_div = parent_tr.parent().parent().parent();
+        var parent_div = $(this).parent().parent().parent();
         
         $.ajax({
             method: "POST",
@@ -34,13 +33,15 @@
         });
     });
     
-    $(".accept_job_request__button").click(function(e){
+    $(".accept_job_request__button").click(function(e) {
         e.preventDefault();
         
-        var parent_tr = $(this).parent().parent();
-        var requestId = parent_tr.find("td.request_id").text();
-        var url = $(this).attr("href");
-        var vacancyId = parent_tr.find("td.vacancy_id").text();
+        var requestId = $(this).parent().find(".request_id").text();
+        var vacancyId = $(this).parent().find(".vacancy_id").text();
+        var button_accept = $(this);
+        var url = button_accept.attr("href");
+        var div_applicant = $(this).parent().parent();
+        var button_status = $("#vacancy_status__button" + vacancyId);
         
         $.ajax({
             method: "POST",
@@ -51,7 +52,9 @@
             },
             success: function (msg) {
                 console.log("Accepted!");
-                
+                button_accept.remove();
+                div_applicant.addClass("bg-success");
+                button_status.removeClass("btn-success").addClass("btn-warning").text("Closed");
             },
             error: function (msg) {
                 console.log("Error: " + msg.responseText);
@@ -66,7 +69,7 @@
         var parent_tr = $(this).parent().parent();
         var userId =    parent_tr.find("td.user_id").text();
         var url =       $(this).attr("href");
-        var status =    parent_tr.find(".user_status");    
+        var status =    parent_tr.find(".user-status button");    
 
         $.ajax({
             method: "POST",
@@ -76,7 +79,12 @@
             },
             success: function (msg) {
                 console.log("Status changed!");
-                status.text(status.text() === "false" ? "true" : "false");
+                var text = status.text();
+                if(text === "Banned") {
+                    status.removeClass("btn-danger").addClass("btn-info").text("Active");
+                } else {
+                    status.removeClass("btn-info").addClass("btn-danger").text("Banned");
+                }
             },
             error: function (msg) {
                 console.log("Error: " + msg.responseText);
@@ -84,6 +92,32 @@
         });
 
     });
+
+    $(".user-status button").each(function(el) {
+        if($(this).text() === "true" ) {
+            $(this).removeClass("btn-danger").addClass("btn-info").text("Active");
+        } else {
+            $(this).removeClass("btn-info").addClass("btn-danger").text("Banned");
+        }
+    });
+
+    $(".job-request-status button").each(function(el) {
+        if($(this).text() === "true" ) {
+            $(this).removeClass("btn-danger").addClass("btn-info").text("Accepted");
+        } else {
+            $(this).removeClass("btn-info").addClass("btn-danger").text("Not Accepted");
+        }
+    });
+
+    $(".vacancy-status button").each(function(el) {
+        if($(this).text() === "true" ) {
+            $(this).removeClass("btn-success").addClass("btn-warning").text("Closed");
+        } else {
+            $(this).removeClass("btn-warning").addClass("btn-success").text("Open");
+        }
+    })
+
+
     
 });   
 

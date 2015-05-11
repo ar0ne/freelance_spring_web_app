@@ -64,7 +64,7 @@
             </nav>
         </div> 
 
-        <div class="container">
+        <div id="container" class="container">
             
             <div id="add_vacancy_form">     
 
@@ -89,6 +89,11 @@
             </div>
 
         </div>
+
+        <footer class="footer">
+            <p>Freelance Platform by <a href="http://github.com/ar0ne/">Serj Ar[]ne</a></p>
+            <p><small>2015</small></p>
+        </footer>
 
         <script src="<c:url value='/resources/js/jquery.min.js'/>" ></script>
 

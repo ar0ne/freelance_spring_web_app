@@ -12,7 +12,7 @@
         <meta name="_csrf_header" content="${_csrf.headerName}"/>
         <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap.min.css'/>" type="text/css">
         <link rel="stylesheet" href="<c:url value='/resources/css/custom.css'/>" type="text/css">
-        <title>Find Job</title>
+        <title>My Job Feed</title>
     </head>
     <body>
         
@@ -64,7 +64,7 @@
             </nav>
         </div>  
         
-        <div class="container">
+        <div class="container" id="container">
 
             <div class="row">
                 <h3>Recommended Jobs</h3>
@@ -83,6 +83,11 @@
                 </c:if>
             </div>
         </div>
+
+        <footer class="footer">
+            <p>Freelance Platform by <a href="http://github.com/ar0ne/">Serj Ar[]ne</a></p>
+            <p><small>2015</small></p>
+        </footer>
         
     </body>
 </html>

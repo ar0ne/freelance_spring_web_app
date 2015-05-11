@@ -1,6 +1,5 @@
 body {
   padding-top: 60px;
-  padding-bottom: 40px;
 /*  background-color: #eee;*/
 }
 .form-signin, .form-signup {
@@ -49,7 +48,7 @@ h3 .vacancy-title {
   font: 700 16px "Gotham Book";
 }
 .vacancy {
-  border-top: 1px solid #b2b2b2;
+  border-bottom: 1px solid #b2b2b2;
 }
 .highlight {
     background-color: #f7f7f9;
@@ -58,7 +57,7 @@ h3 .vacancy-title {
     margin-bottom: 14px;
     padding: 9px 14px;
 }
-#vacancy_info .vacancy-title{
+h2.vacancy-title {
   color: #494949;
   font-weight: 100;
   cursor: auto;
@@ -75,4 +74,45 @@ h3 .vacancy-title {
 #error {
   color: red;
   border-radius: 5%;
+}
+.footer {
+  padding: 20px 0;
+  color: #999;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-top: 1px solid #e5e5e5;
+}
+#container {
+  padding-bottom: 40px;
+  min-height: 430px;
+}
+.error {
+  padding: 5%;
+  color: red;
+}
+.vacancy .vacancy-title {
+  text-align: center;
+}
+.small-user-avatar {
+  max-height: 200px;
+  width: auto;
+}
+div .user-vacancy-title {
+  text-align: center;
+}
+.user-vacancy-title {
+  color: #5bbc2e;
+  font-size: 1.5em;
+}
+.user-vacancy-title:hover {
+  color: #b0e44f;
+}
+#vacancy_table .vacancy {
+  padding: 20px 0;
+}
+.table-applicants {
+  border-top: 1px solid #e5e5e5;
+/*  background-color: red;*/
+  margin: 20px 10px;
+  padding: 10px;
 }
