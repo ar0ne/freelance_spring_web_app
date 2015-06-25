@@ -27,11 +27,10 @@ public class HomeController {
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
     public ModelAndView indexPage() {
         
-        ModelAndView view = new ModelAndView("index");
+        ModelAndView view = new ModelAndView("fp/landingpage");
         
         List<UserAbstract> users = userService.getAllUsers();
         view.addObject("users", users);
-        //view.setViewName("index");
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String login = auth.getName();
@@ -50,7 +49,7 @@ public class HomeController {
     
     @RequestMapping("/signUp")
     public String signUpPage() {
-        return "signUp";
+        return "fp/user/signUp";
     }
     
     
@@ -67,10 +66,16 @@ public class HomeController {
         if (logout != null) {
             model.addObject("msg", "You've been logged out successfully.");
         }
-        model.setViewName("login");
+        model.setViewName("fp/user/login");
 
         return model;
 
+    }
+
+    @RequestMapping("/logout")
+    public String logoutAction() {
+        SecurityContextHolder.clearContext();
+        return "redirect:/index";
     }
     
     @RequestMapping("/userProfile")
@@ -89,11 +94,6 @@ public class HomeController {
         return "redirect:/index";
     }
     
-    @RequestMapping("/logout")
-    public String logoutAction() {
-        SecurityContextHolder.clearContext();
-        return "redirect:/index";
-    }
     
     @RequestMapping(value = {"/userProfile/{id}"}, method = RequestMethod.GET)
     public ModelAndView userProfilePage(@PathVariable("id") long userId) {
@@ -104,7 +104,7 @@ public class HomeController {
         if(user == null) {
             modelAndView = new ModelAndView("redirect:/userProfile");
         } else {
-            modelAndView = new ModelAndView("userProfile");
+            modelAndView = new ModelAndView("fp/user/details");
             
             modelAndView.addObject("user", user);
             

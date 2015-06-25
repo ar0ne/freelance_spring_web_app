@@ -20,11 +20,16 @@
     <mvc:annotation-driven/>
     
     <context:component-scan base-package="com.ar0ne.app.*"/>
- 
-    <bean id="viewResolver"
-          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/pages/"/>
-        <property name="suffix" value=".jsp"/>
+     
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
+    <!-- Tiles configuration -->
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/views/pages.xml</value>
+                <value>/WEB-INF/views/fragments.xml</value>
+            </list>
+        </property>
     </bean>
     
     <bean id="userService" class="com.ar0ne.app.service.UserServiceImpl">

@@ -37,7 +37,7 @@ public class VacancyController {
     @RequestMapping(value = { "/findJob" }, method = RequestMethod.GET)
     public ModelAndView findJobPage() {
         
-        ModelAndView modelAndView = new ModelAndView("findJob");
+        ModelAndView modelAndView = new ModelAndView("fp/job/findJob");
         
         List<Vacancy> vacancyList = vacancyService.getOpenVacancy();
         
@@ -55,7 +55,7 @@ public class VacancyController {
     @RequestMapping(value = "/addVacancy", method = RequestMethod.GET)
     public ModelAndView addVacancyPage() {
         
-        ModelAndView modelAndView = new ModelAndView("addVacancy");
+        ModelAndView modelAndView = new ModelAndView("fp/vacancy/add");
         
         return modelAndView;
     }
@@ -165,7 +165,7 @@ public class VacancyController {
             System.out.println("Vacancy with id = " + vacancyId + " not found!");
             modelAndView = new ModelAndView("redirect:/userProfile");
         } else {
-            modelAndView = new ModelAndView("vacancy");
+            modelAndView = new ModelAndView("fp/vacancy/details");
             modelAndView.addObject("vacancy", vacancy);
             
             List<JobRequest> jobRequestList = jobRequestService.getVacancysJobRequests(vacancyId);
