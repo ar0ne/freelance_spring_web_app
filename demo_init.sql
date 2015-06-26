@@ -43,10 +43,10 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 
 
 INSERT INTO `users` (`USER_ID`, `LOGIN`, `PASSWORD`, `NAME`, `ABOUT` , `ENABLED`) VALUES
-(1, 'admin', '123', 'Serj', 'I am admin! I am GOD!', 1),
-(2, 'pinkman', 'pass', 'Jessi Jackson', 'Lets cook!', 1),
-(3, 'walter', 'pass', 'Walter W.', 'Jessy where is you?', 1),
-(4, 'jenny', 'pass', 'Jennifer', 'Ololo', 1);
+(1, 'admin', '$2a$10$EwE.vWo8lFmcgnmh2TZAC.B2fCArtyTCi9zEwwiFFdMCZn1m67Epu', 'Serj', 'I am admin! I am GOD!', 1),
+(2, 'pinkman', '$2a$10$osnJ89VaM4IQnnaHU1fdbeESxjuW7WpTv1IermxuyPtpcyZQPU/qm', 'Jessi Jackson', 'Lets cook!', 1),
+(3, 'walter', '$2a$10$osnJ89VaM4IQnnaHU1fdbeESxjuW7WpTv1IermxuyPtpcyZQPU/qm', 'Walter W.', 'Jessy where is you?', 1),
+(4, 'jenny', '$2a$10$osnJ89VaM4IQnnaHU1fdbeESxjuW7WpTv1IermxuyPtpcyZQPU/qm', 'Jennifer', 'Ololo', 1);
 
 
 INSERT INTO `vacancys` (`ID` , `USER_ID` , `PAYMENT` , `TITLE` , `DESCRIPTION`, `DATE_ADDED` , `VACANCY_STATUS` ) VALUES

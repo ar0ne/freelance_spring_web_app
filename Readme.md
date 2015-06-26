@@ -1,26 +1,27 @@
 Introducing
 ===============
 
-This is simple web application for Freelancers.
-Wrote on Java and [Spring Framework](http://spring.io).
+This is simple web application for Freelancers. Where users can add vacancies and take to vacancies of other users.
+Application was wrote on Java and [Spring Framework 4.x](http://spring.io).
 
-### How to run
+### Preparation
 
-You must to create new database `spring_freelance` on your MySQL server and run `demo_init.sql` from the root of the project folder for initialization of demo data.
+You must to create new database `spring_freelance` on your MySQL server and run a query `demo_init.sql` from the root of the project folder. It's create necessary tables and initializes of demo data.
 
-In [mvc-dispatcher-servlet.xml](http://github.com/ar0ne/freelance_spring_web_app/freelance/app-web/src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml) you must to add your login and password for MySQL server `57-58`
+Then you must add your login and password for MySQL server `57-58` in [mvc-dispatcher-servlet.xml](http://github.com/ar0ne/freelance_spring_web_app/freelance/app-web/src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml).
 
-And also you can rename database (edit `56`).
+And also here you can rename database (edit `56`).
 
-#### Next you must to run Apache Tomcat Server:
+#### Run
+
+It's maven project, and you can deploy it manually or on server. For example:
 
 `$ cd freelance`
 `$ mvn tomcat:run`
 
-When server is started you can see result in browser
+You can see result in browser: `http://localhost:8080/app-web`
 
-`http://localhost:8080/app-web`
+You can register a new user or use demo users: : 
 
-For accounts login and password you can look `demo_init.sql`.
-
-For example admin account (admin: 123), user account(walter: pass)
+    - administrator account (admin: 123)
+    - user account (walter: pass, pinkman: pass, jenny: pass)

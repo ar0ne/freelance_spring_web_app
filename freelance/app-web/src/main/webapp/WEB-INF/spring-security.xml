@@ -34,6 +34,7 @@
     
     <security:authentication-manager>
         <security:authentication-provider>
+            <security:password-encoder ref="passwordEncoder" />
             <security:jdbc-user-service
                 data-source-ref="dataSource"
                 users-by-username-query="SELECT LOGIN, PASSWORD, ENABLED FROM users WHERE LOGIN = ?"

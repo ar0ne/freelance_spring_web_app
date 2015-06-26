@@ -62,8 +62,6 @@
     </filter-mapping>
 
 
-    
-
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/views/tiles/error/404.jsp</location>
