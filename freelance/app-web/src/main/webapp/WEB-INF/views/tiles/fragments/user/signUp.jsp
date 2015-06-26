@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <div class="container" id="container" >
-    <form class="form-signup" action="<c:url value='/submitDataSignUp' />" method="POST">
+    <form class="form-signup" action="<c:url value='/user/sign_up' />" method="POST">
         <h2 class="form-signup-heading">Register new user</h2>
 
         <label for="Name" class="sr-only">Name</label>

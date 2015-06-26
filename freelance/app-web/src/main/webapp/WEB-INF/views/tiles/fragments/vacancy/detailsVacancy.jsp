@@ -23,7 +23,7 @@
                         <p><b>Posted: </b>${vacancy.dateAdded}</p>
                     </div>
                     <div class="col-md-2">
-                        <p><b>Author: </b><a href='<spring:url value="/userProfile/${vacancy.userId}" ></spring:url>'>${vacancy.userLogin}</a></p>
+                        <p><b>Author: </b><a href='<spring:url value="/user/details/${vacancy.userId}" ></spring:url>'>${vacancy.userLogin}</a></p>
                     </div>
                 </div>
 
@@ -43,7 +43,7 @@
                     </table>
                     
                     <div class="pull-right">
-                        <a class="btn btn-primary" href="<spring:url value="/addJobRequest"></spring:url>" id="add_request__submit">Apply Job</a>
+                        <a class="btn btn-primary" href="<spring:url value='/vacancy/jr/add'></spring:url>" id="add_request__submit">Apply Job</a>
                     </div>
                     <br/>
 
@@ -73,7 +73,7 @@
 
                             <c:forEach items="${jobRequestList}" var="jobRequest">
                                 <tr>
-                                    <td><a href='<spring:url value="/userProfile/${jobRequest.userId}" ></spring:url>'>${jobRequest.userLogin}</a></td>
+                                    <td><a href='<spring:url value="/user/details/${jobRequest.userId}" ></spring:url>'>${jobRequest.userLogin}</a></td>
                                     <td>${jobRequest.comment}</td>
                                     <td>${jobRequest.dateAdded}</td>
                                     <td style="display: none" class="jobRequest_id">${jobRequest.id}</td>

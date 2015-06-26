@@ -5,7 +5,7 @@
 
 <div class="container" id="container">
 
-    <form class="form-signin" name='loginForm' action="<c:url value='/login' />" method='POST'>
+    <form class="form-signin" name='loginForm' action="<c:url value='/user/login' />" method='POST'>
         <h2 class="form-signin-heading">Login and let's go!</h2>
         <br/>
         <label for="username" class="sr-only">Login</label>

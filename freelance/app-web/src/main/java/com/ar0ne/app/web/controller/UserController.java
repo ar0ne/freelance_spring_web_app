@@ -23,14 +23,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;  
-
-    @RequestMapping("/signUp")
-    public String signUpPage() {
-        return "fp/user/signUp";
-    }
     
-    
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/login", method = RequestMethod.GET)
     public ModelAndView login(
             @RequestParam(value = "error", required = false) String error,
             @RequestParam(value = "logout", required = false) String logout) {
@@ -49,13 +43,13 @@ public class UserController {
 
     }
 
-    @RequestMapping("/logout")
+    @RequestMapping("/user/logout")
     public String logout() {
         SecurityContextHolder.clearContext();
         return "redirect:/index";
     }
     
-    @RequestMapping("/userProfile")
+    @RequestMapping("/user/details")
     public String userProfilePage() {
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -64,7 +58,7 @@ public class UserController {
         if(login != null) {
             UserAbstract user = userService.findUserByLogin(login);
             if (user != null) {
-                return "redirect:/userProfile/" + user.getId();
+                return "redirect:/user/details/" + user.getId();
             }
         }
         
@@ -72,14 +66,15 @@ public class UserController {
     }
     
     
-    @RequestMapping(value = {"/userProfile/{id}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/user/details/{id}"}, method = RequestMethod.GET)
     public ModelAndView userProfilePage(@PathVariable("id") long userId) {
+
         UserAbstract user = userService.findUserById(userId);
         
         ModelAndView modelAndView;
         
         if(user == null) {
-            modelAndView = new ModelAndView("redirect:/userProfile");
+            modelAndView = new ModelAndView("redirect:/user/details");
         } else {
             modelAndView = new ModelAndView("fp/user/details");
             
@@ -101,8 +96,13 @@ public class UserController {
     }
     
     
+    @RequestMapping(value = "/user/sign_up", method = RequestMethod.GET)
+    public String signUpPage() {
+        return "fp/user/signUp";
+    }
+
     
-    @RequestMapping(value = "/submitDataSignUp", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/sign_up", method = RequestMethod.POST)
     public String signUpAction( @RequestParam("Name")       String userName,
                                 @RequestParam("Login")      String userLogin,
                                 @RequestParam("Password")   String userPassword) {
@@ -112,14 +112,14 @@ public class UserController {
         if (user == null) {
             user = new Client( userName, userLogin, userPassword, true);
             userService.addUser(user);
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
 
-        return "redirect:/signUp";
+        return "redirect:/user/sign_up";
     }
     
     
-    @RequestMapping(value="/userProfile/submitUpdateUserProfile", method = RequestMethod.POST)
+    @RequestMapping(value="/user/details/update", method = RequestMethod.POST)
     public String updateUserProfileAction(  @RequestParam("name")      String   userName,
                                             @RequestParam("login")     String   userLogin,
                                             @RequestParam("password")  String   userPassword,
@@ -139,12 +139,12 @@ public class UserController {
                 }
             }
         }
-        return "redirect:/userProfile/" + userId;
+        return "redirect:/user/details/" + userId;
     }
     
     
     
-    @RequestMapping(value = "/userProfile/changeUserStatus", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/details/changeUserStatus", method = RequestMethod.POST)
     public ResponseEntity changeUserStatusAction(@RequestParam("userId")    long userId ) {
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

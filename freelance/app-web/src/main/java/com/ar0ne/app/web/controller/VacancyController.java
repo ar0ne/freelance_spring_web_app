@@ -34,7 +34,7 @@ public class VacancyController {
     private JobRequestService jobRequestService;
     
     
-    @RequestMapping(value = "/addVacancy", method = RequestMethod.GET)
+    @RequestMapping(value = "/vacancy/add", method = RequestMethod.GET)
     public ModelAndView addVacancyPage() {
         
         ModelAndView modelAndView = new ModelAndView("fp/vacancy/add");
@@ -43,7 +43,7 @@ public class VacancyController {
     }
     
     
-    @RequestMapping(value = "/submitNewVacancy", method = RequestMethod.POST)
+    @RequestMapping(value = "/vacancy/add", method = RequestMethod.POST)
     public String addNewVacancyAction(  @RequestParam("title")          String   title,
                                         @RequestParam("description")    String   description,
                                         @RequestParam("payment")        String   payment ) {
@@ -70,12 +70,51 @@ public class VacancyController {
             System.out.println("Problem with authentification!");
         }
         
-        return "redirect:/userProfile";
+        return "redirect:/user/details";
+    }       
+    
+    
+    @RequestMapping(value = "/vacancy/{id}", method = RequestMethod.GET)
+    public ModelAndView vacancyFullPage(@PathVariable("id") long vacancyId) {
+        
+        ModelAndView modelAndView = null;
+        
+        Vacancy vacancy = vacancyService.findVacancyById(vacancyId);
+        
+        if(vacancy == null) {
+            System.out.println("Vacancy with id = " + vacancyId + " not found!");
+            modelAndView = new ModelAndView("redirect:/findJob");
+        } else {
+            modelAndView = new ModelAndView("fp/vacancy/details");
+            modelAndView.addObject("vacancy", vacancy);
+            
+            List<JobRequest> jobRequestList = jobRequestService.getVacancysJobRequests(vacancyId);
+            modelAndView.addObject("jobRequestList", jobRequestList);
+
+        }
+        return modelAndView;
     }
-    
-    
+
+    @RequestMapping(value = { "/vacancy/list" }, method = RequestMethod.GET)
+    public ModelAndView findJobPage() {
+        
+        ModelAndView modelAndView = new ModelAndView("fp/vacancy/list");
+        
+        List<Vacancy> vacancyList = vacancyService.getOpenVacancy();
+        
+        // limit all descriptions by 256 chars
+        for(Vacancy vacancy : vacancyList) {
+            String descr = vacancy.getDescription();
+            vacancy.setDescription(descr.length() > 256 ? descr.substring(0, 256) + "..." : descr);
+        }
+        
+        modelAndView.addObject("vacancyList", vacancyList);
+        
+        return modelAndView;
+    }
+
     // for ajax 
-    @RequestMapping(value = "/deleteVacancy", method = RequestMethod.POST)
+    @RequestMapping(value = "/vacancy/remove", method = RequestMethod.POST)
     public ResponseEntity deleteVacancyAction( @RequestParam("vacancyId") long vacancyId ) {
                
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -93,10 +132,9 @@ public class VacancyController {
         }
         return new ResponseEntity("", HttpStatus.NOT_FOUND);
     }
-    
-    
-    
-    @RequestMapping(value = "/addJobRequest", method = RequestMethod.POST)
+
+
+    @RequestMapping(value = "/vacancy/jr/add", method = RequestMethod.POST)
     public ResponseEntity addJobRequestAction( @RequestParam("vacancyId") long   vacancyId,
                                                @RequestParam("comment")   String comment) {
                
@@ -131,54 +169,12 @@ public class VacancyController {
         
         return new ResponseEntity("Problem with authentification", HttpStatus.NOT_FOUND);
     }
-    
-    
-    
-    
-    
-    @RequestMapping(value = "/vacancy/{id}", method = RequestMethod.GET)
-    public ModelAndView vacancyFullPage(@PathVariable("id") long vacancyId) {
-        
-        ModelAndView modelAndView = null;
-        
-        Vacancy vacancy = vacancyService.findVacancyById(vacancyId);
-        
-        if(vacancy == null) {
-            System.out.println("Vacancy with id = " + vacancyId + " not found!");
-            modelAndView = new ModelAndView("redirect:/findJob");
-        } else {
-            modelAndView = new ModelAndView("fp/vacancy/details");
-            modelAndView.addObject("vacancy", vacancy);
-            
-            List<JobRequest> jobRequestList = jobRequestService.getVacancysJobRequests(vacancyId);
-            modelAndView.addObject("jobRequestList", jobRequestList);
 
-        }
-        return modelAndView;
-    }
 
-    @RequestMapping(value = { "/findJob" }, method = RequestMethod.GET)
-    public ModelAndView findJobPage() {
-        
-        ModelAndView modelAndView = new ModelAndView("fp/vacancy/list");
-        
-        List<Vacancy> vacancyList = vacancyService.getOpenVacancy();
-        
-        // limit all descriptions by 256 chars
-        for(Vacancy vacancy : vacancyList) {
-            String descr = vacancy.getDescription();
-            vacancy.setDescription(descr.length() > 256 ? descr.substring(0, 256) + "..." : descr);
-        }
-        
-        modelAndView.addObject("vacancyList", vacancyList);
-        
-        return modelAndView;
-    }
-    
-    
-    @RequestMapping(value = "/acceptRequest", method = RequestMethod.POST)
+    @RequestMapping(value = "/vacancy/jr/accept", method = RequestMethod.POST)
     public ResponseEntity addJobRequestAction( @RequestParam("vacancyId")   long    vacancyId,
                                                @RequestParam("requestId")   long    requestId) {
+        
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String login = auth.getName();
 
@@ -202,5 +198,7 @@ public class VacancyController {
         
         return new ResponseEntity("Problem with authentification", HttpStatus.NOT_FOUND);
     }
+    
+    
     
 }

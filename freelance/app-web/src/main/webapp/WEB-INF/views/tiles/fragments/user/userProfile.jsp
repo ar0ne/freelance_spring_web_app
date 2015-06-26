@@ -40,7 +40,7 @@
                            
                         <div id="update_profile_form" style="display:none">  
 
-                            <form action="<spring:url value='/userProfile/submitUpdateUserProfile' ></spring:url>" method="post">
+                            <form action="<spring:url value='/user/details/update' ></spring:url>" method="POST">
                                 <table class="table">
                                     <tr>
                                         <td>
@@ -117,10 +117,10 @@
                                     <td>${user.id}</td>
                                     <td>${user.login}</td>
                                     <td>${user.name}</td>
-                                    <td><a href='<spring:url value="/userProfile/${user.id}" ></spring:url>'>See profile</a></td>
+                                    <td><a href='<spring:url value="/user/details/${user.id}" ></spring:url>'>See profile</a></td>
                                     <td class="user-status"><button class="btn">${user.enabled}</button></td>
                                     <td style="display: none" class="user_id">${user.id}</td>
-                                    <td><a href='<spring:url value="/userProfile/changeUserStatus" ></spring:url>' class="change_user_status__button">Change status</a></td>
+                                    <td><a href='<spring:url value="/user/details/changeUserStatus" ></spring:url>' class="change_user_status__button">Change status</a></td>
                                 </tr>
                             </c:forEach>
                         </table>
@@ -179,7 +179,7 @@
                                             <p><b>payment: </b>${vacancy.payment}</p>
                                             <p><b>Date added: </b>${vacancy.dateAdded}</p>
                                             <div style="display: none" class="vacancy_id">${vacancy.id}</div>
-                                            <a class="delete_vacancy__button btn btn-danger" href='<spring:url value="/deleteVacancy" ></spring:url>'>Delete</a>
+                                            <a class="delete_vacancy__button btn btn-danger" href='<spring:url value="/vacancy/remove" ></spring:url>'>Delete</a>
                                         </div>
                                     </div>
                                     <c:if test="${not empty vacancy.jobRequests }">
@@ -187,8 +187,8 @@
                                         <c:forEach items="${vacancy.jobRequests}" var="request">
                                             <div class="row table-applicants<c:if test='${request.status}'> bg-success</c:if>">
                                                 <div class="col-md-1">
-                                                    <a href='<spring:url value="/userProfile/${request.userId}" ></spring:url>'><img src="<c:url value='/resources/images/avatar.png'/>" alt="${request.userLogin}" class="img-circle img-responsive small-user-avatar"></a>
-                                                    <p style="text-align: center;"><a href='<spring:url value="/userProfile/${request.userId}" ></spring:url>'>${request.userLogin}</a></p>
+                                                    <a href='<spring:url value="/user/details/${request.userId}" ></spring:url>'><img src="<c:url value='/resources/images/avatar.png'/>" alt="${request.userLogin}" class="img-circle img-responsive small-user-avatar"></a>
+                                                    <p style="text-align: center;"><a href='<spring:url value="/user/details/${request.userId}" ></spring:url>'>${request.userLogin}</a></p>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <p>${request.comment}</p>
@@ -199,7 +199,7 @@
                                                         <span style="display: none" class="request_id">${request.id}</span>
                                                         <span style="display: none" class="vacancy_id">${vacancy.id}</span>
                                                         <c:if test="${not vacancy.status}" >
-                                                            <a href='<spring:url value="/acceptRequest" ></spring:url>' class="accept_job_request__button btn btn-success">Accept</a>
+                                                            <a href='<spring:url value="/vacancy/jr/accept" ></spring:url>' class="accept_job_request__button btn btn-success">Accept</a>
                                                         </c:if>
                                                     </div>
                                                 </c:if>

@@ -15,7 +15,7 @@
                         <h3><a class="vacancy-title" href='<spring:url value="/vacancy/${vacancy.id}" ></spring:url>'>${vacancy.title}</a></h3>
                         <p><b>Payment</b> - ${vacancy.payment}&nbsp;&nbsp;|&nbsp;&nbsp;<b>Posted:</b> ${vacancy.dateAdded}</p>
                         <p>${vacancy.description}  <span class="more_info"><a href='<spring:url value="/vacancy/${vacancy.id}" ></spring:url>'>more</a></span></p>
-                        <p><b>Author:</b> <a href="<spring:url value='/userProfile/${vacancy.userId}' ></spring:url>" >${vacancy.userLogin}</a></p>
+                        <p><b>Author:</b> <a href="<spring:url value='/user/details/${vacancy.userId}' ></spring:url>" >${vacancy.userLogin}</a></p>
                     </div>
                 </c:forEach>
             </div>

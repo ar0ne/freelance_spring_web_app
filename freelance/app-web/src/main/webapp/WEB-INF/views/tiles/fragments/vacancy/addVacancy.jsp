@@ -9,7 +9,7 @@
 
         <h3>Add your vacancy</h3><br/>
 
-        <form action="submitNewVacancy" method="post">
+        <form action="<spring:url value='/vacancy/add' ></spring:url>" method="POST">
 
             <label for="title">Title: </label>
             <input type="text" name="title" class="form-control" maxlength="255" minlength="2" required autofocus /><br/>
