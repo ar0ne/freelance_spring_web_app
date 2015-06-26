@@ -26,9 +26,8 @@
             username-parameter="username"
             login-processing-url="/user/login"
             password-parameter="password" />
-        <!-- <security:intercept-url pattern="/signUp" access="permitAll" />
-        <security:intercept-url pattern="/findJob*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
-        <security:intercept-url pattern="/vacancy/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" /> -->
+        <security:intercept-url pattern="/user/sign_up" access="permitAll" />
+        <security:intercept-url pattern="/vacancy/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
         <security:logout logout-success-url="/index" invalidate-session="true" delete-cookies="JSESSIONID" />
         <security:csrf/> 
     </security:http>
