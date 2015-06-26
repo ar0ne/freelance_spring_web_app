@@ -2,6 +2,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -24,17 +25,15 @@
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
-                        <c:choose>
-                            <c:when test="${pageContext.request.userPrincipal.name != null}">
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </c:when>
-                            <c:otherwise>
-                                <span class="icon-bar"></span>
-                            </c:otherwise>
-                        </c:choose>
+                        <sec:authorize access="isAuthenticated()">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </sec:authorize>
+                        <sec:authorize access="isAnonymous()">
+                            <span class="icon-bar"></span>
+                        </sec:authorize>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
@@ -44,8 +43,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <c:choose>
-                            <c:when test="${pageContext.request.userPrincipal.name != null}">
+                        <sec:authorize access="isAuthenticated()">
                                 <li><a href='<spring:url value="/addVacancy" ></spring:url>'>Add vacancy</a></li> 
                                 <li><a href='<spring:url value="/findJob" ></spring:url>'>Find Job</a></li>
                             </ul>
@@ -53,14 +51,13 @@
                                 <li><a href="<spring:url value="/userProfile" ></spring:url>">Hi, <c:out value="${pageContext.request.userPrincipal.name}" /></a></li>
                                 <li><a href='<spring:url value="/logout" ></spring:url>'>Logout</a></li>
                             </ul>
-                            </c:when>
-                            <c:otherwise>
-                                <ul class="nav navbar-nav navbar-right">
-                                    <li><a href='<spring:url value="/login" ></spring:url>'>Login</a></li>
-                                    <li><a href='<spring:url value="/signUp" ></spring:url>' >Sign Up</a></li>
-                                </ul>
-                            </c:otherwise>
-                        </c:choose>
+                        </sec:authorize>
+                        <sec:authorize access="isAnonymous()">    
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href='<spring:url value="/login" ></spring:url>'>Login</a></li>
+                                <li><a href='<spring:url value="/signUp" ></spring:url>' >Sign Up</a></li>
+                            </ul>
+                        </sec:authorize>
                      </ul>   
                     <ul class="nav navbar-nav navbar-right">
                         <li class="hidden">

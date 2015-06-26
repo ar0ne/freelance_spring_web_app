@@ -32,25 +32,7 @@ public class VacancyController {
     
     @Autowired
     private JobRequestService jobRequestService;
-
     
-    @RequestMapping(value = { "/findJob" }, method = RequestMethod.GET)
-    public ModelAndView findJobPage() {
-        
-        ModelAndView modelAndView = new ModelAndView("fp/job/findJob");
-        
-        List<Vacancy> vacancyList = vacancyService.getOpenVacancy();
-        
-        // limit all descriptions by 256 chars
-        for(Vacancy vacancy : vacancyList) {
-            String descr = vacancy.getDescription();
-            vacancy.setDescription(descr.length() > 256 ? descr.substring(0, 256) + "..." : descr);
-        }
-        
-        modelAndView.addObject("vacancyList", vacancyList);
-        
-        return modelAndView;
-    }
     
     @RequestMapping(value = "/addVacancy", method = RequestMethod.GET)
     public ModelAndView addVacancyPage() {
@@ -163,7 +145,7 @@ public class VacancyController {
         
         if(vacancy == null) {
             System.out.println("Vacancy with id = " + vacancyId + " not found!");
-            modelAndView = new ModelAndView("redirect:/userProfile");
+            modelAndView = new ModelAndView("redirect:/findJob");
         } else {
             modelAndView = new ModelAndView("fp/vacancy/details");
             modelAndView.addObject("vacancy", vacancy);
@@ -172,6 +154,24 @@ public class VacancyController {
             modelAndView.addObject("jobRequestList", jobRequestList);
 
         }
+        return modelAndView;
+    }
+
+    @RequestMapping(value = { "/findJob" }, method = RequestMethod.GET)
+    public ModelAndView findJobPage() {
+        
+        ModelAndView modelAndView = new ModelAndView("fp/vacancy/list");
+        
+        List<Vacancy> vacancyList = vacancyService.getOpenVacancy();
+        
+        // limit all descriptions by 256 chars
+        for(Vacancy vacancy : vacancyList) {
+            String descr = vacancy.getDescription();
+            vacancy.setDescription(descr.length() > 256 ? descr.substring(0, 256) + "..." : descr);
+        }
+        
+        modelAndView.addObject("vacancyList", vacancyList);
+        
         return modelAndView;
     }
     

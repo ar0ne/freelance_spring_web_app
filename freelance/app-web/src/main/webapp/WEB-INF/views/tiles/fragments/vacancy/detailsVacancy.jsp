@@ -17,7 +17,7 @@
 
                 <div class="vacancy-info row">
                     <div class="col-md-4">
-                        <p><b>Payment: </b><c:if test="${not vacancy.payment}" >Not aviable</c:if></p>
+                        <p><b>Payment: </b>${vacancy.payment}</p>
                     </div>
                     <div class="col-md-5">
                         <p><b>Posted: </b>${vacancy.dateAdded}</p>

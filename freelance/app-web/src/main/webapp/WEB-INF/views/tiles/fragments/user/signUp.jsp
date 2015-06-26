@@ -2,8 +2,9 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <div class="container" id="container" >
-    <form class="form-signup" action="<c:url value='/submitDataSignUp' />" method="post">
+    <form class="form-signup" action="<c:url value='/submitDataSignUp' />" method="POST">
         <h2 class="form-signup-heading">Register new user</h2>
 
         <label for="Name" class="sr-only">Name</label>

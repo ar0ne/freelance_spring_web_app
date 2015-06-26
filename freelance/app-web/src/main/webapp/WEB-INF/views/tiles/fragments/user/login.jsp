@@ -2,10 +2,11 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <div class="container" id="container">
 
     <form class="form-signin" name='loginForm' action="<c:url value='/login' />" method='POST'>
-        <h2 class="form-signin-heading">Login and go to work</h2>
+        <h2 class="form-signin-heading">Login and let's go!</h2>
         <br/>
         <label for="username" class="sr-only">Login</label>
         <input type="text" name='username' id="username" class="form-control" placeholder="Login" maxlength="100" minlength="3" required autofocus>

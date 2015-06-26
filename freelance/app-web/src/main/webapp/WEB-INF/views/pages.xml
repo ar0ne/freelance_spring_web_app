@@ -81,8 +81,8 @@
         </put-list-attribute>
     </definition>
  
-    <definition name="fp/job/findJob" extends="fp">
-        <put-attribute name="content" value="fragment/fp/job/findJob"/>
+    <definition name="fp/vacancy/list" extends="fp">
+        <put-attribute name="content" value="fragment/fp/vacancy/list"/>
         <put-attribute name="title" value="Find Job | Freelance Platform"/>
     </definition>    
 
