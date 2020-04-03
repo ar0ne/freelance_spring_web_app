@@ -12,8 +12,10 @@ Then you must add your login and password for MySQL server `57-58` in [mvc-dispa
 
 #### Run
 
-`$ cd freelance`
-`$ mvn tomcat:run`
+```
+$ cd freelance
+$ mvn tomcat:run
+```
 
 You can see result in your browser on page: `http://localhost:8080/app-web`
 
