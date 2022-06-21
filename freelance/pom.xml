@@ -18,7 +18,7 @@
         <tiles.version>3.0.5</tiles.version>
         <spring.version>4.1.6.RELEASE</spring.version>
         <springsecurity.version>4.0.1.RELEASE</springsecurity.version>
-        <mysql.connector.version>8.0.16</mysql.connector.version>
+        <mysql.connector.version>8.0.28</mysql.connector.version>
         <joda-time.version>2.5</joda-time.version>
         <taglibs.standard.version>1.1.2</taglibs.standard.version>
         <javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
